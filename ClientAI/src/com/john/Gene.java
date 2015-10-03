@@ -10,5 +10,5 @@ public class Gene {
     Gene(int size){
         gene = new float[size];
     }
-    
+
 }
