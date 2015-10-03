@@ -8,7 +8,7 @@ def hello():
     return "Guard Dog API v0.1.0"
 
 
-@app.route("/register")
+@app.route("/register", methods=["POST"])
 def register():
     json = request.json
     name = json["name"]
