@@ -30,7 +30,7 @@ def data():
 
     real = bool(request.json["real"])
 
-    user = User.query.filter_by(request.json["phone_number"]).first()
+    user = User.query.filter_by(phone_number=request.json["phone_number"]).first()
 
     if not user:
         abort(401)
@@ -65,7 +65,7 @@ def register():
     password = json["password"]
     warranty = json["warranty"]
 
-    if User.query.filter_by(phone_number=phone):
+    if User.query.filter_by(phone_number=phone).first():
         return "Error, phone number already registered", 401
 
     user = User(name, phone, password, warranty)

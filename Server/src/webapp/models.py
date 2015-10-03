@@ -35,6 +35,7 @@ class Incident(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "user": self.user.phone_number,
             "real": self.real,
             "frames": [each.serialize() for each in self.frames]
         }
