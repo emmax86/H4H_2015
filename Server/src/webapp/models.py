@@ -27,6 +27,13 @@ class Incident(db.Model):
     def __init__(self, real):
         self.real = real
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'real': self.real,
+            'frames': [each.serialize() for each in self.frames]
+        }
+
 
 class AccelerationFrame(db.Model):
     __tablename__ = "frame"
@@ -35,3 +42,18 @@ class AccelerationFrame(db.Model):
     accel_y = db.Column(db.Float)
     accel_z = db.Column(db.Float)
     incident_id = db.Column(db.Integer, db.ForeignKey("incident.id"))
+
+    def __init__(self, accel_x, accel_y, accel_z, incident):
+        self.accel_x = accel_x
+        self.accel_y = accel_y
+        self.accel_z = accel_z
+        self.incident_id = incident.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'accel_x': self.accel_x,
+            'accel_y': self.accel_y,
+            'accel_z': self.accel_z,
+            'incident_id': self.incident_id
+        }
