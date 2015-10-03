@@ -2,8 +2,7 @@ from __init__ import app, db
 from flask import request
 from flask import abort
 from flask import json
-from models import AccelerationFrame, Incident
-
+from models import *
 
 @app.route('/')
 def hello():
@@ -48,3 +47,19 @@ def debug_db():
                 'Incidents' : [each.serialize() for each in Incident.query.all()]
             }
         ), 200
+
+@app.route("/register", methods=["POST"])
+def register():
+    json = request.json
+    name = json["name"]
+    phone = json["phone_number"]
+    password = json["password"]
+    user = User(name, phone, password)
+
+    if User.query.filter_by(phone_number=phone):
+        return "Error, phone number already registered", 401
+
+    db.session.add(user)
+    db.session.commit()
+
+    return "", 200
