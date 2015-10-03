@@ -23,12 +23,31 @@ public class NeuralNetwork {
     /*
     Matrix Multiplication for Forward Propagation
      */
-    float[][] matrixMultiply(float[][] M1,int x1, int x2, float[][] M2, int y1, int y2){
+    float[][] matrixMultiply(float[][] M1,int x1, int x2, float[][] M2, int y1, int y2) {
         float[][] M3 = new float[x1][y2];
-        for(int i = 0; i < x1; i++){
-            for(int j = 0; j < y2; j++){
-                M3[i][j] += M1[i][j]*M2[j][i];
+        for (int i = 0; i < x1; i++) {
+            for (int j = 0; j < y2; j++) {
+                M3[i][j] += M1[i][j] * M2[j][i];
             }
         }
+    }
+
+    /*
+    Apply activation function to each elements of a matrix
+     */
+    float[][] applyActivationFuction(float[][] M, int x, int y){
+        for(int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++){
+                M[i][j] = activationFunction(M[i][j]);
+            }
+        }
+
+    }
+
+    /*
+    Given a float value applied with the logistic function, return that new value
+     */
+    float activationFunction(float value){
+        return (float)(1/(1 + Math.exp(-value)));
     }
 }
