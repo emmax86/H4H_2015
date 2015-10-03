@@ -30,6 +30,7 @@ public class NeuralNetwork {
                 M3[i][j] += M1[i][j] * M2[j][i];
             }
         }
+        return M3;
     }
 
     /*
@@ -41,7 +42,7 @@ public class NeuralNetwork {
                 M[i][j] = activationFunction(M[i][j]);
             }
         }
-
+        return M;
     }
 
     /*
