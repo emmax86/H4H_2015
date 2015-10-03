@@ -5,29 +5,33 @@ package com.john;
  */
 public class NeuralNetwork {
 
+    float [] [] data;
     float [] [] weight1;
-    float [] [] weight2;
 
     /*
     Initialization of the NeuralNetwork
      */
     NeuralNetwork(int inputLayerDimensions, int hiddenLayerDimensions, int outputLayerDimensions, int numData){
-        weight1 = new float[inputLayerDimensions][numData];
-        weight2 = new float[1][numData];
+        data = new float[inputLayerDimensions][numData];
+        weight1 = new float[1][numData];
     }
 
     void forwardPropgate(){
-
+        float[][] data = new float[10][10];
+        float[][] something2 = new float[10][10];
+        //float z2 = matrixMultiply(data, );
     }
 
     /*
     Matrix Multiplication for Forward Propagation
      */
-    float[][] matrixMultiply(float[][] M1,int x1, int x2, float[][] M2, int y1, int y2) {
-        float[][] M3 = new float[x1][y2];
-        for (int i = 0; i < x1; i++) {
-            for (int j = 0; j < y2; j++) {
-                M3[i][j] += M1[i][j] * M2[j][i];
+    float[][] matrixMultiply(float[][] M1,int m1Row, int m1Col, float[][] M2, int m2Col) {
+        float[][] M3 = new float[2][2];
+        for (int i = 0; i < m1Row; i++) { //M1 Rows
+            for (int j = 0; j < m2Col; j++) { // M2 Columns
+                for(int k = 0; k < m1Col; k++) { // M3 Columns
+                    M3[i][j] += M1[i][k] * M2[k][j];
+                }
             }
         }
         return M3;
@@ -50,5 +54,17 @@ public class NeuralNetwork {
      */
     float activationFunction(float value){
         return (float)(1/(1 + Math.exp(-value)));
+    }
+
+    /*
+    Print Matrix
+     */
+    void printMatrix(float [] [] M, int x, int y){
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                System.out.print(M[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
