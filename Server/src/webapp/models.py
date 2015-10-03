@@ -8,11 +8,14 @@ class User(db.Model):
     name = db.Column(db.String(64))
     phone_number = db.Column(db.String(15))
     password_hash = db.Column(db.String(120))
+    warranty = db.Column(db.Boolean, default=False)
+    incidents = db.relationship("Incident", backref="user")
 
-    def __init__(self, name, phone, password):
+    def __init__(self, name, phone, password, warranty):
         self.name = name
         self.phone_number = phone
         self.password_hash = generate_password_hash(password, "pbkdf2:sha256:10000")
+        self.warranty = warranty
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -23,15 +26,17 @@ class Incident(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     real = db.Column(db.Boolean, default=True)
     frames = db.relationship("AccelerationFrame", backref="incident")
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, real):
+    def __init__(self, real, user):
         self.real = real
+        self.user_id = user.id
 
     def serialize(self):
         return {
-            'id': self.id,
-            'real': self.real,
-            'frames': [each.serialize() for each in self.frames]
+            "id": self.id,
+            "real": self.real,
+            "frames": [each.serialize() for each in self.frames]
         }
 
 
@@ -52,9 +57,9 @@ class AccelerationFrame(db.Model):
 
     def serialize(self):
         return {
-            'id': self.id,
-            'accel_x': self.accel_x,
-            'accel_y': self.accel_y,
-            'accel_z': self.accel_z,
-            'incident_id': self.incident_id
+            "id": self.id,
+            "accel_x": self.accel_x,
+            "accel_y": self.accel_y,
+            "accel_z": self.accel_z,
+            "incident_id": self.incident_id
         }
