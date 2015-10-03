@@ -50,7 +50,8 @@ class AccelerationFrame(db.Model):
     accel_z = db.Column(db.Float)
     incident_id = db.Column(db.Integer, db.ForeignKey("incident.id"))
 
-    def __init__(self, accel_x, accel_y, accel_z, incident):
+    def __init__(self, batch_order, accel_x, accel_y, accel_z, incident):
+        self.batch_order = batch_order
         self.accel_x = accel_x
         self.accel_y = accel_y
         self.accel_z = accel_z

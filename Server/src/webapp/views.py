@@ -41,7 +41,7 @@ def data():
 
     frames = request.json["frames"]
     for each in sorted(frames, key=lambda frame: frame["batch_order"]):
-        frame = AccelerationFrame(each["accel_x"], each["accel_y"], each["accel_z"], happening)
+        frame = AccelerationFrame(each["batch_order"], each["accel_x"], each["accel_y"], each["accel_z"], happening)
         db.session.add(frame)
 
     db.session.commit()
