@@ -29,3 +29,5 @@ proguard/
 # Start Steve
 .idea/
 *.iml
+
+venv/
