@@ -31,6 +31,7 @@ class Incident(db.Model):
 class AccelerationFrame(db.Model):
     __tablename__ = "frame"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    batch_order = db.Column(db.Integer)
     accel_x = db.Column(db.Float)
     accel_y = db.Column(db.Float)
     accel_z = db.Column(db.Float)
