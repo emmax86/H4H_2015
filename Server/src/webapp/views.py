@@ -43,6 +43,7 @@ def data():
         return True
 
     if not verify_structure(request.get_json()):
+        print "verify structure"
         abort(401)
 
     real = bool(request.get_json()["real"])
@@ -90,4 +91,31 @@ def register():
     db.session.add(user)
     db.session.commit()
 
+    return "", 200
+
+
+def event_list_flatten(events):
+    x = []
+    for each in events:
+        x.append(event_flatten(each))
+    return x
+
+def event_list_result_flatten(events):
+    return [int(x.real) for x in events]
+
+
+# PASS THIS METHOD AN INCIDENT AND IT WILL GIVE YOU THE VECTOR FOR THE INCIDENT
+def event_flatten(event):
+    x = []
+    y = [[each.accel_x, each.accel_y, each.accel_z] for each in event.frames]
+    for each in y:
+        x.extend(each)
+    return x
+
+@app.route("/test")
+def test():
+    input_vectors = event_list_flatten(Incident.query.all())
+    train_vectors = event_list_result_flatten(Incident.query.all())
+    print input_vectors
+    print train_vectors
     return "", 200
