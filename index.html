@@ -11,20 +11,28 @@
     <script type="text/javascript" src="scripts/jquery.parallax-1.1.3.js"></script>
     <script type="text/javascript" src="scripts/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="scripts/jquery.scrollTo-1.4.2-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+      $(".scroll").click(function(event) {
+      event.preventDefault();
+      $('html,body').animate( { scrollTop:$(this.hash).offset().top } , 1000);
+    } );
+  } );
+</script>
   <script type="text/javascript">
+
 $(document).ready(function(){
-  $('#nav').localScroll(800);
+    
   
   //.parallax(xPosition, speedFactor, outerHeight) options:
   //xPosition - Horizontal position of the element
   //inertia - speed to move relative to vertical scroll. Example: 0.1 is one tenth the speed of scrolling, 2 is twice the speed of scrolling
   //outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
   $('#guard-dog').parallax("50%", 0.1);
-  $('#second').parallax("50%", 0.1);
+  $('#dog-info').parallax("50%", 0.1);
   $('.bg').parallax("50%", 0.4);
   $('#third').parallax("50%", 0.3);
-
-})
 </script>
   </head>
   <body>
@@ -32,10 +40,19 @@ $(document).ready(function(){
       <div class="row">
         <div class="large-12 large-centered text-center columns">
           <img src="images/header_white-blue-dark.png"></img>
-            <a href="#" class="button large dog-button">See the Chops</a>
+            <a href="#dog-info" data-target="dog-info" class="button large dog-button scroll">See the Chops</a>
         </div>
       </div>
     </div>
+    <a id="dog-info"></a>
+    <div name="dog-info" id="dog-info">
+      <div class="row">
+        <div class="large-12 large-centered text-center"> 
+
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="large-12 columns">
         <div class="panel">
