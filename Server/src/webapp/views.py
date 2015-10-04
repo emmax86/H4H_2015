@@ -117,25 +117,19 @@ def analyze():
 
     machine = svm(user.username, event_list_flatten(incidents), event_list_result_flatten(incidents))
 
-    happening = Incident(False, user)
-    db.session.add(happening)
-    db.session.commit()
+    event_list = [0.0] * 75
 
     frames = request.get_json()["frames"]
     for each in sorted(frames, key=lambda frame: frame["batch_order"]):
-        frame = AccelerationFrame(each["batch_order"], each["accel_x"], each["accel_y"], each["accel_z"], happening)
-        db.session.add(frame)
+        batch_order = each["batch_order"]
+        event_list[batch_order * 3] = each["accel_x"]
+        event_list[batch_order * 3 + 1] = each["accel_y"]
+        event_list[batch_order * 3 + 2] = each["accel_z"]
 
-    db.session.commit()
-
-    machine.classify(event_list_flatten(happening))
+    machine.classify(event_list)
     guess = bool(machine.labeled_new_data())
 
-    happening.real = guess
-    db.session.add(happening)
-    db.session.commit()
-
-    return json.dumps({"incident_id": happening.id}), 200
+    return json.dumps({"guess": guess}), 200
 
 
 @app.route("/correct", methods=["POST"])
