@@ -58,8 +58,8 @@ public class CustomActionbar extends RelativeLayout {
         //Don't forget this
         a.recycle();
 
-        if (backgroundType == 1)
-            this.setBackgroundColor(getResources().getColor(R.color.primary_color));
+        this.setBackgroundColor(getResources().getColor(R.color.color5));
+
 
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -78,17 +78,19 @@ public class CustomActionbar extends RelativeLayout {
         this.addView(backButton, backButtonParams);
 
         backButtonImage = new ImageView(context);
-        if (backButtonColor.equals("white")) {
+        if(backButtonColor.equals("blue")) {
             this.backButtonImage.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.custom_white_up_button));
-        } else if (backButtonColor.equals("purple")) {
+        }
+        else if (backButtonColor.equals("purple")) {
             this.backButtonImage.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.custom_white_up_button));
-        } else {
+        }
+        else {
             this.backButtonImage.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.custom_white_up_button));
         }
 
         LayoutParams backButtonImageParams = new LayoutParams
-                ((int) (getResources().getDimension(R.dimen.up_button_side_lengths) * logicalDensity),
-                        (int) (getResources().getDimension(R.dimen.up_button_side_lengths) * logicalDensity));
+                ((int) (getResources().getDimension(R.dimen.up_button_side_lengths)*logicalDensity),
+                        (int) (getResources().getDimension(R.dimen.up_button_side_lengths)*logicalDensity));
         this.backButtonImage.setLayoutParams(backButtonImageParams);
         this.backButtonImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         this.backButtonImage.setPadding((int) (logicalDensity * getResources().getDimension(R.dimen.up_button_padding)), 0,
@@ -106,10 +108,13 @@ public class CustomActionbar extends RelativeLayout {
                 (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         textParams.addRule(RelativeLayout.RIGHT_OF, backButtonImage.getId());
         textParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+
+        this.title = new TextView (context);
+        this.title.setText(text);
+        this.title.setTextColor(textColor);
+        this.title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.action_bar_text_size));
+        this.addView(title,textParams);
     }
-
-
-
 
     public void setEnabled(boolean enabled) {
         this.backButton.setEnabled(enabled);
