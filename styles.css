@@ -213,3 +213,13 @@ body {
 	position: relative;
 	color: #FCFFF5;
 }
+
+.squad {
+	position: relative;
+	bottom: 150px;
+}
+
+.footer-button {
+	position: relative;
+	bottom: 290px;
+}
