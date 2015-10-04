@@ -48,9 +48,9 @@ body {
 
 }
 #dog-footer {
-	background-color: #193441;
+	background-color: #000000;
 	color: white;
-	height: 500px;
+	height: 420px;
 	margin: 0 auto;
 	padding: 120px 0 0 0;
 }
@@ -136,4 +136,14 @@ body {
 .pack-button {
 	position: relative;
 	bottom: 60px;
+}
+
+#dog-footer {
+	color: #000000;
+}
+
+
+.return-button a {
+	color: white;
+	top: 35px;
 }
