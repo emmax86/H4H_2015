@@ -5,14 +5,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
-    name = db.Column(db.String(64))
+    username = db.Column(db.String(64), index=True)
     phone_number = db.Column(db.String(15))
     password_hash = db.Column(db.String(120))
     warranty = db.Column(db.Boolean, default=False)
     incidents = db.relationship("Incident", backref="user")
 
-    def __init__(self, name, phone, password, warranty):
-        self.name = name
+    def __init__(self, username, phone, password, warranty):
+        self.username = username
         self.phone_number = phone
         self.password_hash = generate_password_hash(password, "pbkdf2:sha256:10000")
         self.warranty = warranty

@@ -23,11 +23,13 @@ import android.widget.Toast;
 
 import com.bramblellc.myapplication.R;
 import com.bramblellc.myapplication.fragments.LoadingBar;
+import com.bramblellc.myapplication.services.ActionConstants;
+import com.bramblellc.myapplication.services.SignUpService;
 
 
 public class SignUp extends Activity {
 
-    private EditText desiredUsernameEditText;
+    private EditText desiredNameEditText;
     private EditText desiredPasswordEditText;
     private EditText phoneNumberEditText;
     private Button continueButton;
@@ -36,11 +38,11 @@ public class SignUp extends Activity {
     private FragmentTransaction ft;
     private LoadingBar loadingBar;
 
-    private String username;
+    private String name;
     private String password;
     private String phoneNumber;
 
-    //private SignUpCredentialsReceiver signUpCredentialsReceiver;
+    private SignUpReceiver signUpReceiver;
 
     private CharSequence[] countryCodeArray;
 
@@ -52,7 +54,7 @@ public class SignUp extends Activity {
         fm = getFragmentManager();
         loadingBar = new LoadingBar();
 
-        desiredUsernameEditText = (EditText) findViewById(R.id.editTextDesiredUsername);
+        desiredNameEditText = (EditText) findViewById(R.id.editTextDesiredUsername);
         desiredPasswordEditText = (EditText) findViewById(R.id.editTextDesiredPassword);
         phoneNumberEditText = (EditText) findViewById(R.id.editTextPhoneNumber);
         continueButton = (Button) findViewById(R.id.buttonSignUp);
@@ -123,7 +125,7 @@ public class SignUp extends Activity {
         phoneNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    SignUp();
+                    signUp();
                 }
                 return false;
             }
@@ -131,34 +133,36 @@ public class SignUp extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //signUpCredentialsReceiver = new SignUpCredentialsReceiver();
-        //IntentFilter filter = new IntentFilter(ActionConstants.VALIDATION_ACTION);
-        //LocalBroadcastManager.getInstance(this).registerReceiver(signUpCredentialsReceiver, filter);
+        signUpReceiver = new SignUpReceiver();
+        IntentFilter filter = new IntentFilter(ActionConstants.REGISTER_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(signUpReceiver, filter);
     }
 
     public void disableButtons() {
         continueButton.setEnabled(false);
-        desiredUsernameEditText.setEnabled(false);
+        desiredNameEditText.setEnabled(false);
         desiredPasswordEditText.setEnabled(false);
         phoneNumberEditText.setEnabled(false);
     }
 
     public void enableButtons() {
         continueButton.setEnabled(true);
-        desiredUsernameEditText.setEnabled(true);
+        desiredNameEditText.setEnabled(true);
         desiredPasswordEditText.setEnabled(true);
         phoneNumberEditText.setEnabled(true);
     }
 
     // when the continue button is pressed (sign up)
     public void continueSignUpPressed(View v) {
-        SignUp();
+        signUp();
     }
 
-    public void SignUp() {
-
+    public void signUp() {
+        name = desiredNameEditText.getText().toString();
+        password = desiredPasswordEditText.getText().toString();
+        phoneNumber = phoneNumberEditText.getText().toString().replace("-", "");
         // native checks on inputs gathered
-        if (username.equals("")) {
+        if (name.equals("")) {
             Toast.makeText(this, getResources().getString(R.string.sign_up_credentials_empty_username_error), Toast.LENGTH_SHORT).show();
         }
         else if (password.equals("")) {
@@ -166,12 +170,6 @@ public class SignUp extends Activity {
         }
         else if(phoneNumber.equals("")) {
             Toast.makeText(this, getResources().getString(R.string.sign_up_credentials_empty_phone_number_error), Toast.LENGTH_SHORT).show();
-        }
-        else if(!username.matches("^[a-zA-Z0-9_]+$")) {
-            Toast.makeText(this, getResources().getString(R.string.sign_up_credentials_invalid_username_error), Toast.LENGTH_SHORT).show();
-        }
-        else if(!password.matches("^[a-zA-Z0-9_\\-!@#$%^&*]+$")) {
-            Toast.makeText(this,  getResources().getString(R.string.sign_up_credentials_invalid_password_characters_error), Toast.LENGTH_SHORT).show();
         }
         else if(password.length() < 6 || password.length() > 20){
             Toast.makeText(this,  getResources().getString(R.string.sign_up_credentials_invalid_password_length_error), Toast.LENGTH_SHORT).show();
@@ -182,11 +180,11 @@ public class SignUp extends Activity {
             ft.add(R.id.loading_frame, loadingBar);
             ft.commit();
             continueButton.setText("SIGNING UP");
-            //new CheckCredentialTask().execute(signUpContainer.getDesiredEmail(), signUpContainer.getCountryCode() + signUpContainer.getFullPhoneNumber());
-            //Intent intent = new Intent(this, CheckSignUpCredentialsService.class);
-            //intent.putExtra("username", username);
-            //intent.putExtra("phoneNumber", phoneNumber);
-            //startService(intent);
+            Intent intent = new Intent(this, SignUpService.class);
+            intent.putExtra("username", name);
+            intent.putExtra("password", password);
+            intent.putExtra("phone_number", phoneNumber);
+            startService(intent);
         }
     }
 
@@ -198,7 +196,7 @@ public class SignUp extends Activity {
     }
 
     public String getDesiredUsernameString() {
-        return this.desiredUsernameEditText.getText().toString();
+        return this.desiredNameEditText.getText().toString();
     }
 
     public String getDesiredPasswordString() {
@@ -210,7 +208,7 @@ public class SignUp extends Activity {
     }
 
     public void setDesiredUsernameString(String desiredUsername) {
-        this.desiredUsernameEditText.setText(desiredUsername);
+        this.desiredNameEditText.setText(desiredUsername);
     }
 
     public void setDesiredPasswordString(String desiredPassword) {
@@ -221,10 +219,9 @@ public class SignUp extends Activity {
         this.phoneNumberEditText.setText(phoneNumber);
     }
 
-    /*
-    private class SignUpCredentialsReceiver extends BroadcastReceiver {
+    private class SignUpReceiver extends BroadcastReceiver {
 
-        private SignUpCredentialsReceiver() {
+        private SignUpReceiver() {
 
         }
 
@@ -235,19 +232,17 @@ public class SignUp extends Activity {
                 ft = fm.beginTransaction();
                 ft.remove(loadingBar);
                 ft.commit();
-                Toast.makeText(SignUpCredentials.this, intent.getStringExtra("message"), Toast.LENGTH_LONG).show();
-                continueButton.setText(getResources().getString(R.string.continue_string));
-                SignUpCredentials.this.enableButtons();
+                Toast.makeText(SignUp.this, intent.getStringExtra("message"), Toast.LENGTH_LONG).show();
+                SignUp.this.enableButtons();
             }
             else {
-                LocalBroadcastManager.getInstance(SignUpCredentials.this).unregisterReceiver(signUpCredentialsReceiver);
-                SignUpCredentials.this.enableButtons();
-                Intent startIntent = new Intent(SignUpCredentials.this, SignUpBiographical.class);
+                LocalBroadcastManager.getInstance(SignUp.this).unregisterReceiver(signUpReceiver);
+                SignUp.this.enableButtons();
+                Intent startIntent = new Intent(SignUp.this, Landing.class);
                 startActivity(startIntent);
                 finish();
             }
         }
     }
-    */
 }
 

@@ -39,10 +39,22 @@
             android:name=".activities.SignUp"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
-            android:name=".activities.main"
+            android:name=".activities.Landing"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".activities.Settings"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <service android:name=".services.SignUpService"
+            android:exported="false"/>
+
+        <service android:name=".services.LoginService"
+            android:exported="false"/>
 
     </application>
 

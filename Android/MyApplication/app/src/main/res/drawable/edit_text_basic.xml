@@ -6,7 +6,7 @@
         </shape>
     </item>
 
-    <!-- main color -->
+    <!-- Landing color -->
     <item android:bottom="1dp"
         android:left="1dp"
         android:right="1dp">
