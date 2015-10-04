@@ -44,7 +44,8 @@ public class GeneticAlgorithm {
 
     //Retrieve Top 5
     void retrieve(){
-
+        sort(genes1);
+        sort(genes2);
     }
 
     //Breed
@@ -65,5 +66,19 @@ public class GeneticAlgorithm {
 
     }
 
-    //End
+    /*
+    Sort Method (in terms of Fitness)
+    NOTE-TO-SELF: IMPLEMENT O(nlogn) LATER
+     */
+    void sort(Gene[] g){
+        for (int i = 1; i < g.length; i++){
+            Gene g1 = g[i];
+            int j = i - 1;
+            while (i > 0 && g[i].getFitness() > g1.getFitness()){
+                g[i + 1] = g[i];
+                i = i - 1;
+            }
+            g[i + 1] = g1;
+        }
+    }
 }
