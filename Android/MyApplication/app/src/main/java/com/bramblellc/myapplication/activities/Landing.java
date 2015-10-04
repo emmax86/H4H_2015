@@ -235,7 +235,14 @@ public class Landing extends Activity {
                                 jsonObject.put("real", false);
                                 Intent localIntent = new Intent(Landing.this, DataService.class);
                                 localIntent.putExtra("content", jsonObject.toString());
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+
+                                    }
+                                });
                                 startService(localIntent);
+                                startListening();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -247,7 +254,14 @@ public class Landing extends Activity {
                                 jsonObject.put("real", true);
                                 Intent localIntent = new Intent(Landing.this, DataService.class);
                                 localIntent.putExtra("content", jsonObject.toString());
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+
+                                    }
+                                });
                                 startService(localIntent);
+                                startListening();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -273,6 +287,7 @@ public class Landing extends Activity {
                         Intent localIntent = new Intent(Landing.this, DataService.class);
                         localIntent.putExtra("content", jsonObject.toString());
                         startService(localIntent);
+                        startListening();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -288,12 +303,16 @@ public class Landing extends Activity {
 
     public void startListening() {
         IntentFilter filter = new IntentFilter(ActionConstants.SENSOR_ACTION);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(batchBroadcastReceiver);
+        batchBroadcastReceiver = new BatchBroadcastReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(batchBroadcastReceiver, filter);
+        guardDogSensorListener.startListening();
         Log.d("Guard-Dog", "Listening for frames now. Ayy lmao.");
     }
 
     public void stopListening() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(batchBroadcastReceiver);
+        guardDogSensorListener.stopListening();
         Log.d("Guard-Dog", "No longer listening for frames. Ayy lmao.");
     }
 
@@ -309,8 +328,11 @@ public class Landing extends Activity {
             Intent localIntent = new Intent(Landing.this, AnalyzeService.class);
             localIntent.putExtra("content", content);
             IntentFilter filter = new IntentFilter(ActionConstants.ANALYZE_ACTION);
+            LocalBroadcastManager.getInstance(Landing.this).unregisterReceiver(analyzeBroadcastReceiver);
+            analyzeBroadcastReceiver = new AnalyzeBroadcastReceiver();
             LocalBroadcastManager.getInstance(Landing.this).registerReceiver(analyzeBroadcastReceiver, filter);
             startService(localIntent);
+            stopListening();
         }
 
     }
@@ -329,6 +351,9 @@ public class Landing extends Activity {
             boolean guess = intent.getBooleanExtra("guess", false);
             if (guess) {
                 Landing.this.promptForResponse(content);
+            }
+            else {
+                startListening();
             }
         }
 
