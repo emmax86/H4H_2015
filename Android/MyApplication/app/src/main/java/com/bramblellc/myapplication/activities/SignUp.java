@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -38,7 +39,7 @@ public class SignUp extends Activity {
     private FragmentTransaction ft;
     private LoadingBar loadingBar;
 
-    private String name;
+    private String username;
     private String password;
     private String phoneNumber;
 
@@ -158,11 +159,11 @@ public class SignUp extends Activity {
     }
 
     public void signUp() {
-        name = desiredNameEditText.getText().toString();
+        username = desiredNameEditText.getText().toString();
         password = desiredPasswordEditText.getText().toString();
         phoneNumber = phoneNumberEditText.getText().toString().replace("-", "");
         // native checks on inputs gathered
-        if (name.equals("")) {
+        if (username.equals("")) {
             Toast.makeText(this, getResources().getString(R.string.sign_up_credentials_empty_username_error), Toast.LENGTH_SHORT).show();
         }
         else if (password.equals("")) {
@@ -181,7 +182,7 @@ public class SignUp extends Activity {
             ft.commit();
             continueButton.setText("SIGNING UP");
             Intent intent = new Intent(this, SignUpService.class);
-            intent.putExtra("username", name);
+            intent.putExtra("username", username);
             intent.putExtra("password", password);
             intent.putExtra("phone_number", phoneNumber);
             startService(intent);
@@ -236,6 +237,10 @@ public class SignUp extends Activity {
                 SignUp.this.enableButtons();
             }
             else {
+                SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
+                editor.putString("username", username);
+                editor.putString("password", password);
+                editor.commit();
                 LocalBroadcastManager.getInstance(SignUp.this).unregisterReceiver(signUpReceiver);
                 SignUp.this.enableButtons();
                 Intent startIntent = new Intent(SignUp.this, Landing.class);

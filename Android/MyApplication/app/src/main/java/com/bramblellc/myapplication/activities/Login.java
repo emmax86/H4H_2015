@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -24,12 +25,16 @@ import com.bramblellc.myapplication.fragments.LoadingBar;
 import com.bramblellc.myapplication.services.ActionConstants;
 import com.bramblellc.myapplication.services.LoginService;
 
+import java.util.Set;
+
 public class Login extends Activity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private boolean buttonsEnabled;
+    private String username;
+    private String password;
 
     private FragmentManager fm;
     private FragmentTransaction ft;
@@ -46,7 +51,12 @@ public class Login extends Activity {
         loadingBar = new LoadingBar();
 
         usernameEditText = (EditText) findViewById(R.id.editTextLoginUsername);
-
+        SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
+        String un = prefs.getString("old_username", null);
+        System.out.println(un);
+        if (un != null && !un.isEmpty()) {
+            usernameEditText.setText(un);
+        }
         //usernameEditText.setText(User.getUser().getUsername());
         passwordEditText = (EditText) findViewById(R.id.editTextPassword);
         loginButton = (Button) findViewById(R.id.buttonSignIn);
@@ -112,8 +122,8 @@ public class Login extends Activity {
     }
 
     public void login() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        username = usernameEditText.getText().toString();
+        password = passwordEditText.getText().toString();
         if (username.equals("") || password.equals("")) {
             Toast.makeText(this, "Enter your username or password please", Toast.LENGTH_SHORT).show();
         }
@@ -155,6 +165,10 @@ public class Login extends Activity {
                 Login.this.enableButtons();
             }
             else {
+                SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
+                editor.putString("username", username);
+                editor.putString("password", password);
+                editor.commit();
                 LocalBroadcastManager.getInstance(Login.this).unregisterReceiver(loginReceiver);
                 Intent startIntent = new Intent(Login.this, Landing.class);
                 startActivity(startIntent);
