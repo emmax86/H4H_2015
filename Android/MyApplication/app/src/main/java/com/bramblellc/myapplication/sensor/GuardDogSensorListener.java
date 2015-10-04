@@ -9,7 +9,6 @@ import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.bramblellc.myapplication.services.ActionConstants;
-import com.bramblellc.myapplication.services.TestingDataService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,7 +112,6 @@ public class GuardDogSensorListener implements SensorEventListener {
             Batch b = createBatch(true);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("username", username);
-            jsonObject.put("real", b.real);
             JSONArray array = new JSONArray();
             for (Frame f : b.frames) {
                 JSONObject frameObject = new JSONObject();
@@ -125,7 +123,7 @@ public class GuardDogSensorListener implements SensorEventListener {
             }
             jsonObject.put("frames", array);
             Intent localIntent = new Intent(ActionConstants.SENSOR_ACTION);
-            localIntent.putExtra("batch", jsonObject.toString());
+            localIntent.putExtra("content", jsonObject.toString());
             LocalBroadcastManager.getInstance(ctx).sendBroadcast(localIntent);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -19,6 +19,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bramblellc.myapplication.R;
 import com.bramblellc.myapplication.sensor.GuardDogSensorListener;
 import com.bramblellc.myapplication.services.ActionConstants;
+import com.bramblellc.myapplication.services.AnalyzeService;
+import com.bramblellc.myapplication.services.DataService;
+
+import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -32,6 +36,8 @@ public class Landing extends Activity {
 
     private BatchBroadcastReceiver batchBroadcastReceiver;
 
+    private AnalyzeBroadcastReceiver analyzeBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +47,7 @@ public class Landing extends Activity {
         guardDogSensorListener = new GuardDogSensorListener(this, prefs.getString("username", "hodor"));
 
         batchBroadcastReceiver = new BatchBroadcastReceiver();
+        analyzeBroadcastReceiver = new AnalyzeBroadcastReceiver();
 
         boolean finish = getIntent().getBooleanExtra("finish", false);
         if (finish) {
@@ -210,6 +217,10 @@ public class Landing extends Activity {
         startActivity(intent);
     }
 
+    public void promptForResponse(String content) {
+
+    }
+
     public void startListening() {
         IntentFilter filter = new IntentFilter(ActionConstants.SENSOR_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(batchBroadcastReceiver, filter);
@@ -229,7 +240,31 @@ public class Landing extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            String content = intent.getStringExtra("content");
+            Intent localIntent = new Intent(Landing.this, AnalyzeService.class);
+            localIntent.putExtra("content", content);
+            IntentFilter filter = new IntentFilter(ActionConstants.ANALYZE_ACTION);
+            LocalBroadcastManager.getInstance(Landing.this).registerReceiver(analyzeBroadcastReceiver, filter);
+            startService(localIntent);
+        }
 
+    }
+
+    private class AnalyzeBroadcastReceiver extends BroadcastReceiver {
+
+        private AnalyzeBroadcastReceiver() {
+
+        }
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LocalBroadcastManager.getInstance(Landing.this).unregisterReceiver(analyzeBroadcastReceiver);
+            String content = intent.getStringExtra("content");
+            boolean guess = intent.getBooleanExtra("guess", false);
+            if (guess) {
+                Landing.this.promptForResponse(content);
+            }
         }
 
     }

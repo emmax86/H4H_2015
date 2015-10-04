@@ -61,7 +61,10 @@
         <service android:name=".services.LoginService"
             android:exported="false"/>
 
-        <service android:name=".services.TestingDataService"
+        <service android:name=".services.DataService"
+            android:exported="false"/>
+
+        <service android:name=".services.AnalyzeService"
             android:exported="false"/>
 
         <receiver

@@ -14,19 +14,19 @@ import com.stevex86.napper.response.Response;
 
 import java.io.IOException;
 
-public class TestingDataService extends IntentService {
+public class DataService extends IntentService {
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-    public TestingDataService(String name) {
+    public DataService(String name) {
         super(name);
     }
 
-    public TestingDataService() {
-        this("TestingDataService");
+    public DataService() {
+        this("DataService");
     }
 
     @Override
