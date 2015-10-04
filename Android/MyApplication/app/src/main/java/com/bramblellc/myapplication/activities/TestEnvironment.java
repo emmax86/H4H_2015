@@ -34,11 +34,11 @@ public class TestEnvironment extends Activity implements SensorEventListener {
 
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        //sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        //sensorManager.unregisterListener(this);
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
