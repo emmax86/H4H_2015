@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.bramblellc.myapplication.R;
+import com.github.mikephil.charting.charts.LineChart;
 
 import java.util.Random;
 
@@ -30,6 +31,9 @@ public class Landing extends Activity {
         else {
             layout.setBackgroundResource(R.drawable.landing_background_3);
         }
+
+        LineChart lineChart = (LineChart) findViewById(R.id.landing_chart);
+        lineChart.setDescription("Your current acceleration");
     }
 
     // LOGIN PATH

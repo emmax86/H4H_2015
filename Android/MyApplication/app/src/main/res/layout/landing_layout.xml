@@ -17,4 +17,9 @@
         android:background="@mipmap/settings"
         android:onClick="settingsPressed"/>
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/landing_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>
