@@ -45,7 +45,8 @@
         </activity>
 
 
-
+        <service android:name=".services.SignUpService"
+            android:exported="false"/>
 
     </application>
 

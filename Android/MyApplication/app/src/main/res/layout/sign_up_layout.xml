@@ -37,7 +37,7 @@
             android:background="@drawable/edit_text_basic"
             android:paddingLeft="@dimen/edittext_padding"
             android:paddingRight="@dimen/edittext_padding"
-            android:hint="username"
+            android:hint="name"
             android:layout_below="@+id/signUpTitle"
             android:inputType="text"
             android:layout_centerHorizontal="true"/>
