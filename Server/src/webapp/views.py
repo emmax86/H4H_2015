@@ -159,7 +159,8 @@ def correct():
 @app.route("/test")
 def test():
     user = User.query.filter_by(username="hodor").first()
-    print user.incidents
+    for incident in user.incidents:
+        print incident.id
     return "", 200
 
 # PASS THIS METHOD AN INCIDENT AND IT WILL GIVE YOU THE VECTOR FOR THE INCIDENT

@@ -1,8 +1,8 @@
 from sklearn import svm
 from sklearn.externals import joblib
 
-class svm:
 
+class svm:
     """
     Initialization of the Support Vector Machine.
     """
