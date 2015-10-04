@@ -2,6 +2,7 @@ package com.bramblellc.myapplication.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bramblellc.myapplication.R;
+import com.bramblellc.myapplication.services.TestingDataService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,6 +117,9 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                         i++;
                     }
                     jsonObject.put("frames", jsonObjects);
+                    Intent localIntent = new Intent(TestEnvironment.this, TestingDataService.class);
+                    localIntent.putExtra("content", jsonObject.toString());
+                    startService(localIntent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -140,6 +145,9 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                         i++;
                     }
                     jsonObject.put("frames", jsonObjects);
+                    Intent localIntent = new Intent(TestEnvironment.this, TestingDataService.class);
+                    localIntent.putExtra("content", jsonObject.toString());
+                    startService(localIntent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
