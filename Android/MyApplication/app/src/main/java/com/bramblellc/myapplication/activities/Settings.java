@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Toast;
 
@@ -125,7 +126,8 @@ public class Settings extends Activity {
                 .content("Enter the phone number of the Guard Dog you would like to remove from your kennel.")
                 .positiveText("remove")
                 .negativeText("Cancel")
-                .input("", "", new MaterialDialog.InputCallback() {
+                .inputType(InputType.TYPE_CLASS_PHONE)
+                .input("phone number", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
@@ -177,7 +179,8 @@ public class Settings extends Activity {
                 .content("Enter the phone number of the phone service provider you would like to add or replace as your contact.")
                 .positiveText("Add")
                 .negativeText("Cancel")
-                .input("", "", new MaterialDialog.InputCallback() {
+                .inputType(InputType.TYPE_CLASS_PHONE)
+                .input("phone number", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();

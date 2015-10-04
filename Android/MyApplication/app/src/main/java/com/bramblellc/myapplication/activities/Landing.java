@@ -5,19 +5,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bramblellc.myapplication.R;
-import com.github.mikephil.charting.charts.LineChart;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 public class Landing extends Activity {
+
+    private ImageView transportType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class Landing extends Activity {
             finish();
             return;
         }
+        transportType = (ImageView) findViewById(R.id.transport_type);
         setContentView(R.layout.landing_layout);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Random rnd = new Random();
@@ -51,9 +54,6 @@ public class Landing extends Activity {
         else {
             layout.setBackgroundResource(R.drawable.landing_background_3);
         }
-
-        LineChart lineChart = (LineChart) findViewById(R.id.landing_chart);
-        lineChart.setDescription("Your current acceleration");
         init();
     }
 
@@ -79,7 +79,8 @@ public class Landing extends Activity {
                 .title("ADD A GUARD DOG")
                 .content("Enter the phone number of the Guard Dog you would like to add.")
                 .positiveText("Add")
-                .input("", "", new MaterialDialog.InputCallback() {
+                .inputType(InputType.TYPE_CLASS_PHONE)
+                .input("phone number", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
@@ -154,7 +155,8 @@ public class Landing extends Activity {
                 .title("ADD A PHONE SERVICE CONTACT")
                 .content("Enter the phone number of the phone service provider you would like to add.")
                 .positiveText("Add")
-                .input("", "", new MaterialDialog.InputCallback() {
+                .inputType(InputType.TYPE_CLASS_PHONE)
+                .input("phone number", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
