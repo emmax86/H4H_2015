@@ -20,7 +20,31 @@ body {
 #dog-info {
 	background-color: #FCFFF5;
 	color: white; 
-	height: 360px;
+	height: 600px;
+	margin: 0 auto;
+	padding: 120px 0 0 0;
+}
+
+#dog-data {
+	background: url(images/blurred_2.png) 50% 0 no-repeat fixed;
+	color: white;
+	height: 720px;
+	margin: 0 auto;
+	padding: 120px 0 0 0;
+}
+
+#dog-pack {
+	background-color: #3E606F;
+	color: white;
+	height: 720px;
+	margin: 0 auto;
+	padding: 120px 0 0 0;
+
+}
+#dog-footer {
+	background-color: #193441;
+	color: white;
+	height: 500px;
 	margin: 0 auto;
 	padding: 120px 0 0 0;
 }
@@ -33,6 +57,6 @@ body {
 	position: relative;
 	top: -100px;
 }
-.transportation {
-	left: -50000000px
+.team-buttom {
+	bottom: -110px;
 }
