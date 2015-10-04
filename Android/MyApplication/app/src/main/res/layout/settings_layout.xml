@@ -40,6 +40,7 @@
         android:text="Log out"
         app:lowerLine="true" />
 
+    <!--
     <com.bramblellc.myapplication.layouts.FullWidthButton
         android:id="@+id/test_full_width_button"
         android:layout_width="fill_parent"
@@ -47,6 +48,7 @@
         android:layout_below="@+id/logout_full_width_button"
         android:text="TEST ENVIRONMENT"
         app:lowerLine="true" />
+    -->
 
     <TextView
         android:layout_width="wrap_content"

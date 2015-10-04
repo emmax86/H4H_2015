@@ -100,7 +100,8 @@ public class Landing extends Activity {
         if (setup) {
             new MaterialDialog.Builder(this)
                     .title("WELCOME")
-                    .content("Let's start out by adding some Guard Dogs to your account!")
+                    .content("Let's start out by adding some Guard Dogs to your account! A Guard Dog" +
+                            " is someone that will receive alerts if you are ever determined to be in danger")
                     .positiveText("Next")
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
