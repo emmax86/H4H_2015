@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -71,6 +72,20 @@ public class Landing extends Activity {
             layout.setBackgroundResource(R.drawable.landing_background_3);
         }
         init();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("Guard-Dog", "Stopped. Lmaoooooo.");
+        stopListening();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        Log.d("Guard-Dog", "Resumed. Lmaoooooo.");
+        startListening();
     }
 
     public void init() {
@@ -198,10 +213,12 @@ public class Landing extends Activity {
     public void startListening() {
         IntentFilter filter = new IntentFilter(ActionConstants.SENSOR_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(batchBroadcastReceiver, filter);
+        Log.d("Guard-Dog", "Listening for frames now. Ayy lmao.");
     }
 
     public void stopListening() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(batchBroadcastReceiver);
+        Log.d("Guard-Dog", "No longer listening for frames. Ayy lmao.");
     }
 
     private class BatchBroadcastReceiver extends BroadcastReceiver {
@@ -212,7 +229,7 @@ public class Landing extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            
+
         }
 
     }
