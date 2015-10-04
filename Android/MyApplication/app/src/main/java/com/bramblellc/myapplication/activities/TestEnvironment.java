@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.bramblellc.myapplication.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class TestEnvironment extends Activity implements SensorEventListener {
 
     private float mLastX, mLastY, mLastZ;
@@ -95,13 +98,51 @@ public class TestEnvironment extends Activity implements SensorEventListener {
 
         event.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                createBatch(true);
+                try {
+                    Batch b = createBatch(true);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", "hodor");
+                    jsonObject.put("real", b.real);
+                    JSONObject[] jsonObjects = new JSONObject[25];
+                    int i = 0;
+                    for (Frame f : b.frames) {
+                        JSONObject frameObject = new JSONObject();
+                        frameObject.put("accel_x", f.accel_x);
+                        frameObject.put("accel_y", f.accel_y);
+                        frameObject.put("accel_z", f.accel_z);
+                        frameObject.put("batch_order", f.batch_order);
+                        jsonObjects[i] = frameObject;
+                        i++;
+                    }
+                    jsonObject.put("frames", jsonObjects);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         no_event.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                createBatch(false);
+                try {
+                    Batch b = createBatch(false);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", "hodor");
+                    jsonObject.put("real", b.real);
+                    JSONObject[] jsonObjects = new JSONObject[25];
+                    int i = 0;
+                    for (Frame f : b.frames) {
+                        JSONObject frameObject = new JSONObject();
+                        frameObject.put("accel_x", f.accel_x);
+                        frameObject.put("accel_y", f.accel_y);
+                        frameObject.put("accel_z", f.accel_z);
+                        frameObject.put("batch_order", f.batch_order);
+                        jsonObjects[i] = frameObject;
+                        i++;
+                    }
+                    jsonObject.put("frames", jsonObjects);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
