@@ -100,7 +100,7 @@ def analyze():
     def verify_structure(obj):
         if not obj:
             return False
-        elif ("real" not in obj) or ("frames" not in obj) or ("username" not in obj):
+        elif ("frames" not in obj) or ("username" not in obj):
             return False
         return True
 
@@ -129,7 +129,7 @@ def analyze():
     machine.classify(event_list)
     guess = bool(machine.labeled_new_data())
 
-    return json.dumps({"guess": guess}), 200
+    return json.dumps({"guess": guess, "content": request.get_json()}), 200
 
 
 @app.route("/correct", methods=["POST"])
