@@ -156,13 +156,6 @@ def correct():
     return "Great Success", 200
 
 
-@app.route("/test")
-def test():
-    user = User.query.filter_by(username="hodor").first()
-    for incident in user.incidents:
-        print incident.id
-    return "", 200
-
 # PASS THIS METHOD AN INCIDENT AND IT WILL GIVE YOU THE VECTOR FOR THE INCIDENT
 def event_flatten(event):
     x = []
