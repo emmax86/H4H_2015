@@ -21,7 +21,8 @@ public class Settings extends Activity {
 
     private CustomActionbar settingsCustomActionbar;
     private FullWidthButton myDogsFullWidthButton;
-    private FullWidthButton phoneAidInputFullWidthButton;
+    private FullWidthButton phoneServicesFullWidthButton;
+    private FullWidthButton logoutFullWidthButton;
     private FullWidthButton testFullWidthButton;
 
     @Override
@@ -32,7 +33,8 @@ public class Settings extends Activity {
 
         settingsCustomActionbar = (CustomActionbar) findViewById(R.id.settings_custom_actionbar);
         myDogsFullWidthButton = (FullWidthButton) findViewById(R.id.my_dogs_full_width_button);
-        phoneAidInputFullWidthButton = (FullWidthButton) findViewById(R.id.phone_aid_input_full_width_button);
+        phoneServicesFullWidthButton = (FullWidthButton) findViewById(R.id.phone_aid_input_full_width_button);
+        logoutFullWidthButton = (FullWidthButton) findViewById(R.id.logout_full_width_button);
         testFullWidthButton = (FullWidthButton) findViewById(R.id.test_full_width_button);
 
         settingsCustomActionbar.getBackButton().setOnClickListener(new View.OnClickListener() {
@@ -48,10 +50,17 @@ public class Settings extends Activity {
             }
         });
 
-        phoneAidInputFullWidthButton.getFullWidthButton().setOnClickListener(new View.OnClickListener() {
+        phoneServicesFullWidthButton.getFullWidthButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //phoneAidInputPressed(v);
+                phoneServicesPressed(v);
+            }
+        });
+
+        logoutFullWidthButton.getFullWidthButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutPressed(v);
             }
         });
 
@@ -132,5 +141,73 @@ public class Settings extends Activity {
                     }
                 }).show();
 
+    }
+
+    public void phoneServicesPressed(View view) {
+        new MaterialDialog.Builder(this)
+                .title("ADD OR REMOVE CONTACT FOR PHONE SERVICES")
+                .positiveText("ADD")
+                .negativeText("REMOVE")
+                .neutralText("CANCEL")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        addPhoneServiceContact();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
+                        String contact = prefs.getString("phone", null);
+                        SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
+                        editor.putString("phone", null);
+                        editor.commit();
+                        if (contact != null)
+                            Toast.makeText(Settings.this, "Your phone service provider has been removed as your contact.", Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(Settings.this, "There was no phone service provider to remove.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
+    }
+
+    public void addPhoneServiceContact() {
+        new MaterialDialog.Builder(this)
+                .title("ADD A PHONE SERVICE CONTACT")
+                .content("Enter the phone number of the phone service provider you would like to add or replace as your contact.")
+                .positiveText("Add")
+                .negativeText("Cancel")
+                .input("", "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
+                        String contact = input.toString();
+                        editor.putString("phone", contact);
+                        editor.commit();
+                    }
+                }).show();
+    }
+
+    public void logoutPressed(View view) {
+        new MaterialDialog.Builder(this)
+                .title("LOG OUT")
+                .content("Are you sure you would like to log out?")
+                .positiveText("Yes")
+                .negativeText("No")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        logout();
+                    }
+                })
+                .show();
+    }
+
+    public void logout() {
+        Intent startIntent = new Intent(Settings.this, Landing.class);
+        startIntent.putExtra("finish", true);
+        startIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
+        startActivity(startIntent);
+        finish();
     }
 }
