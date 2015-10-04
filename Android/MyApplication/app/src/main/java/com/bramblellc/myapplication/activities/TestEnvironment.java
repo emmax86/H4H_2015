@@ -20,11 +20,9 @@ public class TestEnvironment extends Activity implements SensorEventListener {
     private boolean initialized;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private final float NOISE = (float) 2.0;
     private long last_time;
 
     private long start_time;
-    private long end_time;
 
     private TextView time_tv;
 
@@ -86,7 +84,6 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 trial_in_progress = true;
                 time_tv.setText("0");
                 start_time = System.currentTimeMillis();
-                end_time = start_time + (1000*5); // 5 second trial time
 
                 frame_data = new Frame[25];
                 index = 0;
@@ -145,14 +142,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
             last_time = System.currentTimeMillis();
             initialized = true;
         } else {
-            float deltaX = x - mLastX;
-            float deltaY = y - mLastY;
-            float deltaZ = z - mLastZ;
-            /*
-            if (deltaX < NOISE) deltaX = (float)0.0;
-            if (deltaY < NOISE) deltaY = (float)0.0;
-            if (deltaZ < NOISE) deltaZ = (float)0.0;
-            */
+
             mLastX = x;
             mLastY = y;
             mLastZ = z;
@@ -173,7 +163,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                     c_frame.accel_z = z;
                     c_frame.batch_order = index;
                     frame_data[index] = c_frame;
-                    index = index + 1;
+                    index++;
                 } else {
                     trial_in_progress = false;
                 }
