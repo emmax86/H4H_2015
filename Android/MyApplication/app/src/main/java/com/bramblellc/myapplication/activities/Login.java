@@ -217,7 +217,7 @@ public class Login extends Activity {
             }
             else {
                 LocalBroadcastManager.getInstance(Login.this).unregisterReceiver(loginReceiver);
-                Intent startIntent = new Intent(Login.this, main.class);
+                Intent startIntent = new Intent(Login.this, Landing.class);
                 startActivity(startIntent);
                 finish();
             }

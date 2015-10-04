@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="32dp"
             android:paddingBottom="32dp"
-            android:text="LOGIN"
+            android:text="LOG IN"
             android:textColor="@color/color4"
             android:textSize="66sp"
             android:id="@+id/signInTitle"
@@ -79,7 +79,7 @@
     <com.bramblellc.myapplication.layouts.ButtonWithTypeface
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:text="LOGIN"
+        android:text="LOG IN"
         android:textColor="@color/color1"
         android:background="@color/color5"
         android:textSize="40sp"
