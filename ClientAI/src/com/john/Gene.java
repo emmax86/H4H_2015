@@ -1,26 +1,17 @@
 package com.john;
 
+import java.util.Random;
 /**
  * Gene Class for the Genetic Algorithm used for Learning
  */
 public class Gene {
 
     float [][] gene;
+    float fitness;
+    Random r = new Random();
 
-    Gene(int rows, int cols){
-        gene = new float[rows][cols];
-        for( int i = 0; i < rows; i++){
-            for ( int j = 0; j < cols; j++) {
-                gene[i][j] = 0.0f;
-            }
-        }
-    }
-
-    /*
-    Return Length of Gene
-     */
-    int getSize(){
-        return gene.length;
+    Gene(float[][] copy){
+        copyWeightMatrix(copy);
     }
 
     /*
@@ -29,4 +20,42 @@ public class Gene {
     void copyWeightMatrix(float [][] weight){
         gene = weight;
     }
+
+    /*
+    Return Gene
+     */
+    float[][] returnGene(){
+        return gene;
+    }
+
+    /*
+    Mutate the Genes (Randomly Change the values inside the Gene)
+     */
+    void mutateGene(){
+        int numberOfMutates = r.nextInt();
+        for (int i = 0; i < numberOfMutates; i++){
+            int x = r.nextInt(gene.length);
+            int y = r.nextInt(gene[0].length);
+            float value = r.nextFloat();
+            gene[x][y] = value;
+        }
+    }
+
+    /*
+    Set Fitness Level
+    IN THIS CASE, LOWER ERROR IS HIGHER FITNESS; THUS FOR EASE LOWER FITNESS IS OF HIGHER PRECEDENCE IN ARTIFICIAL SELECTION
+     */
+    void setFitnessLevel(float fitness){
+        this.fitness = fitness;
+    }
+
+    /*
+    Retrieve Fitness Level
+     */
+
+    float getFitness(){
+        return fitness;
+    }
+
+
 }
