@@ -50,19 +50,25 @@ public class NeuralNetwork {
             }
         }
     }
+
+    float[][][] retrieveWeights(){
+        float[][][] weightArray = {weight1, weight2};
+        return weightArray;
+    }
     /*
     Update Weights for the Neural Network
      */
-    void updateWeights(Gene[] gene1, Gene[] gene2){
-
+    void updateWeights(Gene gene1, Gene gene2){
+        this.weight1 = gene1.returnGene();
+        this.weight2 = gene2.returnGene();
     }
+
     /*
     Applied forward propagation for the input to get output
      */
     void forwardPropgate(){
-        float[][] z2 = applyActivationFuction(matrixMultiply(data, this.numdata, this.inputLayerDimensions, weight1, this.hiddenLayerDimensions), this.numdata, this.hiddenLayerDimensions);
+        z2 = applyActivationFuction(matrixMultiply(data, this.numdata, this.inputLayerDimensions, weight1, this.hiddenLayerDimensions), this.numdata, this.hiddenLayerDimensions);
         yHat = applyActivationFuction(matrixMultiply(z2,this.inputLayerDimensions,this.hiddenLayerDimensions,weight1,this.outputLayerDimensions ),this.inputLayerDimensions,this.outputLayerDimensions );
-
     }
 
     /*
@@ -121,4 +127,5 @@ public class NeuralNetwork {
             System.out.println();
         }
     }
+
 }
