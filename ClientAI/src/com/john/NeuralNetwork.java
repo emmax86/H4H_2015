@@ -9,7 +9,7 @@ public class NeuralNetwork {
     float [] [] weight1;
     float [] [] z2;
     float [] [] weight2;
-    float [] [] z3;
+    float [] [] yHat;
     int inputLayerDimensions;
     int hiddenLayerDimensions;
     int outputLayerDimensions;
@@ -27,13 +27,13 @@ public class NeuralNetwork {
         this.outputLayerDimensions = outputLayerDimensions;
         this.numdata = numData;
     }
-    
+
     /*
     Applied forward propagation for the input to get output
      */
     void forwardPropgate(){
         float[][] z2 = applyActivationFuction(matrixMultiply(data, this.numdata, this.inputLayerDimensions, weight1, this.hiddenLayerDimensions), this.numdata, this.hiddenLayerDimensions);
-        float[][] yHat = applyActivationFuction(matrixMultiply(z2,this.inputLayerDimensions,this.hiddenLayerDimensions,weight1,this.outputLayerDimensions ),this.inputLayerDimensions,this.outputLayerDimensions );
+        yHat = applyActivationFuction(matrixMultiply(z2,this.inputLayerDimensions,this.hiddenLayerDimensions,weight1,this.outputLayerDimensions ),this.inputLayerDimensions,this.outputLayerDimensions );
 
     }
 
@@ -63,7 +63,16 @@ public class NeuralNetwork {
         }
         return M;
     }
-
+    /*
+    Print Error (y - yHate) a.k.a (True Value - Predicted Value)
+     */
+    float[][] retrieveError(){
+        for(int i = 0; i < numdata; i++){
+            for(int j = 0; j < outputLayerDimensions; j++){
+                System.out.println(yHat[i][j]);
+            }
+        }
+    }
     /*
     Given a float value applied with the logistic function, return that new value
      */
