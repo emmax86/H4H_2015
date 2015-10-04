@@ -50,7 +50,12 @@ public class NeuralNetwork {
             }
         }
     }
+    /*
+    Update Weights for the Neural Network
+     */
+    void updateWeights(Gene[] gene1, Gene[] gene2){
 
+    }
     /*
     Applied forward propagation for the input to get output
      */
