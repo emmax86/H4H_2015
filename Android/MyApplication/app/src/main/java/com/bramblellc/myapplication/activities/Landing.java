@@ -3,11 +3,13 @@ package com.bramblellc.myapplication.activities;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.bramblellc.myapplication.services.ActionConstants;
 import com.bramblellc.myapplication.services.AnalyzeService;
 import com.bramblellc.myapplication.services.DataService;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashSet;
@@ -219,7 +222,68 @@ public class Landing extends Activity {
     }
 
     public void promptForResponse(String content) {
+        try {
+            final JSONObject jsonObject = new JSONObject(content);
+            final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .title("ARE YOU OK?")
+                    .positiveText("YES")
+                    .negativeText("NO")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            try {
+                                jsonObject.put("real", false);
+                                Intent localIntent = new Intent(Landing.this, DataService.class);
+                                localIntent.putExtra("content", jsonObject.toString());
+                                startService(localIntent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            try {
+                                jsonObject.put("real", true);
+                                Intent localIntent = new Intent(Landing.this, DataService.class);
+                                localIntent.putExtra("content", jsonObject.toString());
+                                startService(localIntent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    })
+                    .build();
+            dialog.show();
+            final Handler handler = new Handler();
+            final Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            };
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    try {
+                        handler.removeCallbacks(runnable);
+                        jsonObject.put("real", true);
+                        Intent localIntent = new Intent(Landing.this, DataService.class);
+                        localIntent.putExtra("content", jsonObject.toString());
+                        startService(localIntent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            handler.postDelayed(runnable, 10000);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startListening() {
