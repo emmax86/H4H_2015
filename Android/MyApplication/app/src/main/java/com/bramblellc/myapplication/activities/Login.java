@@ -11,9 +11,6 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -29,7 +26,7 @@ import com.bramblellc.myapplication.services.LoginService;
 
 public class Login extends Activity {
 
-    private EditText phoneNumberEditText;
+    private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private boolean buttonsEnabled;
@@ -48,72 +45,9 @@ public class Login extends Activity {
         fm = getFragmentManager();
         loadingBar = new LoadingBar();
 
-        phoneNumberEditText = (EditText) findViewById(R.id.editTextLoginUsername);
+        usernameEditText = (EditText) findViewById(R.id.editTextLoginUsername);
 
-        phoneNumberEditText.addTextChangedListener(new TextWatcher() {
-
-            private boolean isFormatting;
-            private boolean deletingHyphen;
-            private int hyphenStart;
-            private boolean deletingBackward;
-
-            @Override
-            public void afterTextChanged(Editable text) {
-                if (isFormatting)
-                    return;
-
-                isFormatting = true;
-
-                // If deleting hyphen, also delete character before or after it
-                if (deletingHyphen && hyphenStart > 0) {
-                    if (deletingBackward) {
-                        if (hyphenStart - 1 < text.length()) {
-                            text.delete(hyphenStart - 1, hyphenStart);
-                        }
-                    } else if (hyphenStart < text.length()) {
-                        text.delete(hyphenStart, hyphenStart + 1);
-                    }
-                }
-                if (text.length() == 3 || text.length() == 7) {
-                    text.append('-');
-                }
-
-                isFormatting = false;
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (isFormatting)
-                    return;
-
-                // Make sure user is deleting one char, without a selection
-                final int selStart = Selection.getSelectionStart(s);
-                final int selEnd = Selection.getSelectionEnd(s);
-                if (s.length() > 1 // Can delete another character
-                        && count == 1 // Deleting only one character
-                        && after == 0 // Deleting
-                        && s.charAt(start) == '-' // a hyphen
-                        && selStart == selEnd) { // no selection
-                    deletingHyphen = true;
-                    hyphenStart = start;
-                    // Check if the user is deleting forward or backward
-                    if (selStart == start + 1) {
-                        deletingBackward = true;
-                    } else {
-                        deletingBackward = false;
-                    }
-                } else {
-                    deletingHyphen = false;
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-        });
-
-        //phoneNumberEditText.setText(User.getUser().getUsername());
+        //usernameEditText.setText(User.getUser().getUsername());
         passwordEditText = (EditText) findViewById(R.id.editTextPassword);
         loginButton = (Button) findViewById(R.id.buttonSignIn);
         buttonsEnabled = true;
@@ -142,7 +76,7 @@ public class Login extends Activity {
             }
         });
 
-        phoneNumberEditText.requestFocus();
+        usernameEditText.requestFocus();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loginReceiver = new LoginReceiver();
@@ -152,14 +86,14 @@ public class Login extends Activity {
 
     public void disableButtons() {
         loginButton.setEnabled(false);
-        phoneNumberEditText.setEnabled(false);
+        usernameEditText.setEnabled(false);
         passwordEditText.setEnabled(false);
         buttonsEnabled = false;
     }
 
     public void enableButtons() {
         loginButton.setEnabled(true);
-        phoneNumberEditText.setEnabled(true);
+        usernameEditText.setEnabled(true);
         passwordEditText.setEnabled(true);
         buttonsEnabled = true;
     }
@@ -178,9 +112,9 @@ public class Login extends Activity {
     }
 
     public void login() {
-        String phoneNumber = phoneNumberEditText.getText().toString();
+        String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        if (phoneNumber.equals("") || password.equals("")) {
+        if (username.equals("") || password.equals("")) {
             Toast.makeText(this, "Enter your username or password please", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -191,7 +125,7 @@ public class Login extends Activity {
             loginButton.setText("LOGGING IN");
             //new LoginTask().execute(username, password);
             Intent intent = new Intent(this, LoginService.class);
-            intent.putExtra("phone_number", phoneNumber.replaceAll("-", ""));
+            intent.putExtra("username", username);
             intent.putExtra("password", password);
             startService(intent);
         }

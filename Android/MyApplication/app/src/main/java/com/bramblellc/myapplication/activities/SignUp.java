@@ -181,7 +181,7 @@ public class SignUp extends Activity {
             ft.commit();
             continueButton.setText("SIGNING UP");
             Intent intent = new Intent(this, SignUpService.class);
-            intent.putExtra("name", name);
+            intent.putExtra("username", name);
             intent.putExtra("password", password);
             intent.putExtra("phone_number", phoneNumber);
             startService(intent);

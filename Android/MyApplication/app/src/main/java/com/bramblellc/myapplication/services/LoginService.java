@@ -40,7 +40,7 @@ public class LoginService extends IntentService {
             Request request = new Request(route, new Post());
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("phone_number", intent.getStringExtra("phone_number"));
+            jsonObject.put("username", intent.getStringExtra("username"));
             jsonObject.put("password", intent.getStringExtra("password"));
 
             JsonBodyContent content = new JsonBodyContent(jsonObject.toString());
