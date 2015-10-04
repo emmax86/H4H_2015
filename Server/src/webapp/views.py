@@ -8,7 +8,7 @@ from svm import svm
 
 @app.route("/")
 def hello():
-    return "Guard Dog API v0.1.1"
+    return "Guard Dog API v0.1.2"
 
 
 @app.route("/create")
