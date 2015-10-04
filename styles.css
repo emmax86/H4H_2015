@@ -147,3 +147,41 @@ body {
 	color: white;
 	top: 35px;
 }
+.steve {
+	position: relative;
+
+}
+
+.thomas {
+	position: relative;
+}
+.dan {
+	position: relative;
+}
+.steve-name h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.steve-bio h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+.thomas-name h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.thomas-bio h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.dan-name h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+.dan-bio h4 {
+	position: relative;
+	color: #FCFFF5;
+}
