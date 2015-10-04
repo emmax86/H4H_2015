@@ -30,7 +30,7 @@ public class AnalyzeService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            Route route = new Route("http://guarddog.stevex86.com/data");
+            Route route = new Route("http://guarddog.stevex86.com/analyze");
             Request request = new Request(route, new Post());
 
             JsonBodyContent content = new JsonBodyContent(intent.getStringExtra("content"));
@@ -48,9 +48,11 @@ public class AnalyzeService extends IntentService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         }
         catch (IOException e) {
+            e.printStackTrace();
             Log.d("Guard-Dog", "Ayy lmao, IOException thrown");
         }
         catch (JSONException e) {
+            e.printStackTrace();
             Log.d("Guard-Dog", "Ayy lmao, JSONException thrown");
         }
     }
