@@ -54,7 +54,7 @@ public class SignUpService extends IntentService {
             Response response = connectionHandler.getResponse();
 
             Intent localIntent = new Intent(ActionConstants.REGISTER_ACTION);
-            localIntent.putExtra("successful", true);
+            localIntent.putExtra("successful", response.getResponseCode() < 400);
             localIntent.putExtra("message", response.getBodyContent().getOutputString());
             LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         }

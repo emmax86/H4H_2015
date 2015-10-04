@@ -23,6 +23,10 @@ def login():
     password = obj["password"]
 
     user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return "Great Failure", 401
+
     if user.verify_password(password):
         return "Great Success", 200
     else:
