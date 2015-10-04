@@ -244,6 +244,7 @@ public class SignUp extends Activity {
                 LocalBroadcastManager.getInstance(SignUp.this).unregisterReceiver(signUpReceiver);
                 SignUp.this.enableButtons();
                 Intent startIntent = new Intent(SignUp.this, Landing.class);
+                startIntent.putExtra("setup", true);
                 startActivity(startIntent);
                 finish();
             }
