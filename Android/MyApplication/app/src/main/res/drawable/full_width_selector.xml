@@ -3,5 +3,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/full_width_button_pressed"
           android:state_pressed="true"/>
-    <item android:drawable="@drawable/full_width_button"/>
+    <item android:drawable="@drawable/full_width_button"
+        android:state_pressed="false"/>
 </selector>
