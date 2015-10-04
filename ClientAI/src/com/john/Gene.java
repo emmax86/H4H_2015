@@ -5,15 +5,17 @@ package com.john;
  */
 public class Gene {
 
-    float [] gene;
+    float [][] gene;
 
-    Gene(int size){
-        gene = new float[size];
-        for( int i = 0; i < size; i++){
-            gene[i] = 0.0f;
+    Gene(int rows, int cols){
+        gene = new float[rows][cols];
+        for( int i = 0; i < rows; i++){
+            for ( int j = 0; j < cols; j++) {
+                gene[i][j] = 0.0f;
+            }
         }
     }
-    
+
     /*
     Return Length of Gene
      */
@@ -22,14 +24,9 @@ public class Gene {
     }
 
     /*
-    Copy Weight Matrix (2-Dimensional) to
-    Gene Data Structure (1-Dimensional Array)
+    Copy Weight Matrix to Gene Matrix
      */
-    void copyWeightMatrix(float [][] weight, int rows, int cols){
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
-                gene[(i*cols)+j] = weight[i][j];
-            }
-        }
+    void copyWeightMatrix(float [][] weight){
+        gene = weight;
     }
 }
