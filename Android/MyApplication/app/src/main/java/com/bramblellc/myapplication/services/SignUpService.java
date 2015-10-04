@@ -40,7 +40,7 @@ public class SignUpService extends IntentService {
             Request request = new Request(route, new Post());
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", intent.getStringExtra("name"));
+            jsonObject.put("username", intent.getStringExtra("username"));
             jsonObject.put("phone_number", intent.getStringExtra("phone_number"));
             jsonObject.put("warranty", false);
             jsonObject.put("password", intent.getStringExtra("password"));
