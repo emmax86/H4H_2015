@@ -12,3 +12,7 @@ body {
 	margin: 0 auto;
 	padding: 120px 0 0 0;
 }
+
+.dog-button {
+	top: -25px;
+}

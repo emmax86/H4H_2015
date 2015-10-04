@@ -1164,14 +1164,14 @@ button, .button {
   display: inline-block;
   padding: 1rem 2rem 1.0625rem 2rem;
   font-size: 1rem;
-  background-color: #008CBA;
+  background-color: #193441;
   border-color: #007095;
-  color: #FFFFFF;
+  color: #FCFFF5;
   transition: background-color 300ms ease-out; }
   button:hover, button:focus, .button:hover, .button:focus {
-    background-color: #007095; }
+    background-color: #3e606f; }
   button:hover, button:focus, .button:hover, .button:focus {
-    color: #FFFFFF; }
+    color: #FCFFF5; }
   button.secondary, .button.secondary {
     background-color: #e7e7e7;
     border-color: #b9b9b9;
