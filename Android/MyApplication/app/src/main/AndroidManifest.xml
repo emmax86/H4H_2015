@@ -50,6 +50,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".activities.TestEnvironment"
+            android:screenOrientation="portrait">
+        </activity>
+
         <service android:name=".services.SignUpService"
             android:exported="false"/>
 

@@ -11,5 +11,10 @@
             <solid android:color="@color/color1" />
         </shape>
     </item>
+    <item android:right="12dp">
+        <bitmap
+            android:src="@mipmap/unchecked_box"
+            android:gravity="center_vertical|right" />
+    </item>
 
 </layer-list>
