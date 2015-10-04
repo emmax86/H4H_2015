@@ -16,7 +16,7 @@ def create():
     return "Great Success", 200
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST"])
 def login():
     obj = request.get_json()
     phone_number = obj["phone_number"]
