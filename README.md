@@ -1,1 +1,3 @@
-# H4H_2015
+# Hacks 4 Humanity 2015: Guard Dog
+This is team Ayy Lmao's submission for the 2015 Hacks 4 Humanity. This is an Android app, supported by a server which hosts artificial intelligence, that uses accelerometer data points to detect if a person who has a phone running this app on them is ever in any type of danger. After receiving a positive response from the learning algorithm, the app will begin a timed alarm that, if a button is not pressed in time, will send distress texts to every phone number included in the user's "kennel". The phone will also begin recording front facing video in an attempt to gather evidence of the event which caused the alarm triggering event.
+
