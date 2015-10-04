@@ -1,1 +1,4 @@
-# H4H_2015
+# Hacks 4 Humanity 2015:
+# Guard Dog
+
+
