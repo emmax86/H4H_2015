@@ -60,3 +60,29 @@ body {
 .team-buttom {
 	bottom: -110px;
 }
+.smartphones {
+	position: relative;
+}
+
+.users {
+	position: relative;
+}
+
+.alarms {
+	position: relative;
+}
+
+.smartphones-nums h1 {
+	position: absolute;
+	color: #FCFFF5;
+}
+
+.users-nums h1 {
+	position: absolute;
+	color: #FCFFF5;
+}
+
+.alarms-nums h1 {
+	position: absolute;
+	color: #FCFFF5;
+}
