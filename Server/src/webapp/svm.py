@@ -2,7 +2,7 @@ from sklearn import svm
 from sklearn.externals import joblib
 
 
-class svm:
+class SVM:
     """
     Initialization of the Support Vector Machine.
     """

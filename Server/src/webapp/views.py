@@ -3,7 +3,7 @@ from flask import request
 from flask import abort
 from flask import json
 from models import *
-from svm import svm
+from svm import SVM
 
 
 @app.route("/")
@@ -115,7 +115,7 @@ def analyze():
 
     incidents = user.incidents
 
-    machine = svm(user.username, event_list_flatten(incidents), event_list_result_flatten(incidents))
+    machine = SVM(user.username, event_list_flatten(incidents), event_list_result_flatten(incidents))
 
     event_list = [0.0] * 75
 
