@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bramblellc.myapplication.R;
 import com.bramblellc.myapplication.services.TestingDataService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,20 +106,18 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 try {
                     Batch b = createBatch(true);
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("name", "hodor");
+                    jsonObject.put("username", "hodor");
                     jsonObject.put("real", b.real);
-                    JSONObject[] jsonObjects = new JSONObject[25];
-                    int i = 0;
+                    JSONArray array = new JSONArray();
                     for (Frame f : b.frames) {
                         JSONObject frameObject = new JSONObject();
                         frameObject.put("accel_x", f.accel_x);
                         frameObject.put("accel_y", f.accel_y);
                         frameObject.put("accel_z", f.accel_z);
                         frameObject.put("batch_order", f.batch_order);
-                        jsonObjects[i] = frameObject;
-                        i++;
+                        array.put(frameObject);
                     }
-                    jsonObject.put("frames", jsonObjects);
+                    jsonObject.put("frames", array);
                     Intent localIntent = new Intent(TestEnvironment.this, TestingDataService.class);
                     localIntent.putExtra("content", jsonObject.toString());
                     startService(localIntent);
@@ -133,20 +132,18 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 try {
                     Batch b = createBatch(false);
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("name", "hodor");
+                    jsonObject.put("username", "hodor");
                     jsonObject.put("real", b.real);
-                    JSONObject[] jsonObjects = new JSONObject[25];
-                    int i = 0;
+                    JSONArray array = new JSONArray();
                     for (Frame f : b.frames) {
                         JSONObject frameObject = new JSONObject();
                         frameObject.put("accel_x", f.accel_x);
                         frameObject.put("accel_y", f.accel_y);
                         frameObject.put("accel_z", f.accel_z);
                         frameObject.put("batch_order", f.batch_order);
-                        jsonObjects[i] = frameObject;
-                        i++;
+                        array.put(frameObject);
                     }
-                    jsonObject.put("frames", jsonObjects);
+                    jsonObject.put("frames", array);
                     Intent localIntent = new Intent(TestEnvironment.this, TestingDataService.class);
                     localIntent.putExtra("content", jsonObject.toString());
                     startService(localIntent);
@@ -211,7 +208,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 // Push the data to the list
                 time_tv.setText(Long.toString((current_time-start_time)));
                 if (index < frame_data.length) {
-                    if (current_time - last_record > 195) {
+                    if (current_time - last_record >= 200) {
                         Frame c_frame = new Frame();
                         c_frame.accel_x = x;
                         c_frame.accel_y = y;
