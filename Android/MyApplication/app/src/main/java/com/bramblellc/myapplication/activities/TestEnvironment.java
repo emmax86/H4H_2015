@@ -30,6 +30,8 @@ public class TestEnvironment extends Activity implements SensorEventListener {
     private long start_time;
     private long end_time;
 
+    private long last_record;
+
     private TextView time_tv;
     private Button start;
     private Button event;
@@ -76,7 +78,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
         initialized = false;
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, 200000); // Sensor delay 200ms
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         start = (Button)findViewById(R.id.start_b);
         event = (Button)findViewById(R.id.true_b);
@@ -95,6 +97,8 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 index = 0;
             }
         });
+
+        last_record = 0;
 
         event.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -207,13 +211,16 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 // Push the data to the list
                 time_tv.setText(Long.toString((current_time-start_time)));
                 if (index < frame_data.length) {
-                    Frame c_frame = new Frame();
-                    c_frame.accel_x = x;
-                    c_frame.accel_y = y;
-                    c_frame.accel_z = z;
-                    c_frame.batch_order = index;
-                    frame_data[index] = c_frame;
-                    index++;
+                    if (current_time - last_record > 195) {
+                        Frame c_frame = new Frame();
+                        c_frame.accel_x = x;
+                        c_frame.accel_y = y;
+                        c_frame.accel_z = z;
+                        c_frame.batch_order = index;
+                        frame_data[index] = c_frame;
+                        index++;
+                        last_record = current_time;
+                    }
                 } else {
                     trial_in_progress = false;
                 }
