@@ -163,7 +163,7 @@ body {
 	color: #FCFFF5;
 }
 
-.steve-bio h4 {
+.steve-bio h5 {
 	position: relative;
 	color: #FCFFF5;
 }
@@ -172,7 +172,7 @@ body {
 	color: #FCFFF5;
 }
 
-.thomas-bio h4 {
+.thomas-bio h5 {
 	position: relative;
 	color: #FCFFF5;
 }
@@ -181,7 +181,35 @@ body {
 	position: relative;
 	color: #FCFFF5;
 }
-.dan-bio h4 {
+.dan-bio h5 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.nathan {
+	position: relative;
+}
+
+.nathan-name h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.nathan-bio h5 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.john {
+	position: relative;
+}
+
+.john-name h4 {
+	position: relative;
+	color: #FCFFF5;
+}
+
+.john-bio h5 {
 	position: relative;
 	color: #FCFFF5;
 }
