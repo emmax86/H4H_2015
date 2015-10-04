@@ -132,3 +132,8 @@ body {
 	position: relative;
 	bottom: 120px;
 }
+
+.pack-button {
+	position: relative;
+	bottom: 60px;
+}
