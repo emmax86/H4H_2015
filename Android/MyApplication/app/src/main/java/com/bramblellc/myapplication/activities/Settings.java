@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bramblellc.myapplication.R;
 import com.bramblellc.myapplication.layouts.CustomActionbar;
 import com.bramblellc.myapplication.layouts.FullWidthButton;
@@ -41,7 +42,7 @@ public class Settings extends Activity {
         myDogsFullWidthButton.getFullWidthButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //myDogsPressed(v);
+                myDogsPressed(v);
             }
         });
 
@@ -70,6 +71,20 @@ public class Settings extends Activity {
     public void testFullWidthPressed(View view) {
         Intent intent = new Intent(Settings.this, TestEnvironment.class);
         startActivity(intent);
+    }
+
+    public void myDogsPressed(View view) {
+        new MaterialDialog.Builder(this)
+                .title("Add or remove Guard Dogs")
+                .content(getResources().getString(R.string.default_message_edit_material_dialog_message))
+                .positiveText(getResources().getString(R.string.change))
+                .negativeText(getResources().getString(R.string.cancel))
+                .input("", "this needs to be done", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        System.out.println("should have collected input. swag swag");
+                    }
+                }).show();
     }
 
 }
