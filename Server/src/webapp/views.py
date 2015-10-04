@@ -3,6 +3,7 @@ from flask import request
 from flask import abort
 from flask import json
 from models import *
+from svm import svm
 
 
 @app.route("/")
@@ -94,15 +95,72 @@ def register():
     return "", 200
 
 
-def event_list_flatten(events):
-    x = []
-    for each in events:
-        x.append(event_flatten(each))
-    return x
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    def verify_structure(obj):
+        if not obj:
+            return False
+        elif ("real" not in obj) or ("frames" not in obj) or ("username" not in obj):
+            return False
+        return True
 
-def event_list_result_flatten(events):
-    return [int(x.real) for x in events]
+    if not verify_structure(request.get_json()):
+        print "verify structure"
+        abort(401)
 
+    user = User.query.filter_by(username=request.get_json()["username"]).first()
+
+    if not user:
+        abort(401)
+
+    incidents = user.incidents
+
+    machine = svm(user.username, event_list_flatten(incidents), event_list_result_flatten(incidents))
+
+    happening = Incident(False, user)
+    db.session.add(happening)
+    db.session.commit()
+
+    frames = request.get_json()["frames"]
+    for each in sorted(frames, key=lambda frame: frame["batch_order"]):
+        frame = AccelerationFrame(each["batch_order"], each["accel_x"], each["accel_y"], each["accel_z"], happening)
+        db.session.add(frame)
+
+    db.session.commit()
+
+    machine.classify(event_list_flatten(happening))
+    guess = bool(machine.labeled_new_data())
+
+    happening.real = guess
+    db.session.add(happening)
+    db.session.commit()
+
+    return json.dumps({"incident_id": happening.id}), 200
+
+
+@app.route("/correct", methods=["POST"])
+def correct():
+    obj = request.get_json()
+    real = obj["real"]
+    incident_id = obj["incident_id"]
+
+    incident = Incident.query.filter_by(id=incident_id).first()
+
+    if not incident:
+        abort(401)
+
+    incident.real = real
+    db.session.add(incident)
+    db.session.commit()
+
+    return "Great Success", 200
+
+
+@app.route("/test")
+def test():
+    user = User.query.filter_by(username="hodor").first()
+    print user.incidents
+    return "", 200
 
 # PASS THIS METHOD AN INCIDENT AND IT WILL GIVE YOU THE VECTOR FOR THE INCIDENT
 def event_flatten(event):
@@ -112,10 +170,14 @@ def event_flatten(event):
         x.extend(each)
     return x
 
-@app.route("/test")
-def test():
-    input_vectors = event_list_flatten(Incident.query.all())
-    train_vectors = event_list_result_flatten(Incident.query.all())
-    print input_vectors
-    print train_vectors
-    return "", 200
+
+def event_list_flatten(events):
+    x = []
+    for each in events:
+        x.append(event_flatten(each))
+    return x
+
+
+def event_list_result_flatten(events):
+    return [int(x.real) for x in events]
+
