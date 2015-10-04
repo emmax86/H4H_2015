@@ -9,20 +9,8 @@ public class Gene {
     float [][] gene;
     Random r = new Random();
 
-    Gene(int rows, int cols){
-        gene = new float[rows][cols];
-        for( int i = 0; i < rows; i++){
-            for ( int j = 0; j < cols; j++) {
-                gene[i][j] = r.nextFloat();
-            }
-        }
-    }
-
-    /*
-    Return Length of Gene
-     */
-    int getSize(){
-        return gene.length;
+    Gene(float[][] copy){
+        copyWeightMatrix(copy);
     }
 
     /*
