@@ -7,19 +7,34 @@ public class NeuralNetwork {
 
     float [] [] data;
     float [] [] weight1;
+    float [] [] z2;
+    float [] [] weight2;
+    float [] [] z3;
+    int inputLayerDimensions;
+    int hiddenLayerDimensions;
+    int outputLayerDimensions;
+    int numdata;
 
     /*
     Initialization of the NeuralNetwork
      */
     NeuralNetwork(int inputLayerDimensions, int hiddenLayerDimensions, int outputLayerDimensions, int numData){
-        data = new float[inputLayerDimensions][numData];
-        weight1 = new float[1][numData];
+        data = new float[numData][inputLayerDimensions];
+        weight1 = new float[inputLayerDimensions][hiddenLayerDimensions];
+        weight2 = new float[hiddenLayerDimensions][outputLayerDimensions];
+        this.inputLayerDimensions = inputLayerDimensions;
+        this.hiddenLayerDimensions = hiddenLayerDimensions;
+        this.outputLayerDimensions = outputLayerDimensions;
+        this.numdata = numData;
     }
-
+    
+    /*
+    Applied forward propagation for the input to get output
+     */
     void forwardPropgate(){
-        float[][] data = new float[10][10];
-        float[][] something2 = new float[10][10];
-        //float z2 = matrixMultiply(data, );
+        float[][] z2 = applyActivationFuction(matrixMultiply(data, this.numdata, this.inputLayerDimensions, weight1, this.hiddenLayerDimensions), this.numdata, this.hiddenLayerDimensions);
+        float[][] yHat = applyActivationFuction(matrixMultiply(z2,this.inputLayerDimensions,this.hiddenLayerDimensions,weight1,this.outputLayerDimensions ),this.inputLayerDimensions,this.outputLayerDimensions );
+
     }
 
     /*
