@@ -31,7 +31,7 @@ $(document).ready(function(){
   //outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
   $('#guard-dog').parallax("50%", 0.1);
   $('#dog-info').parallax("50%", 0.1);
-  $('.bg').parallax("50%", 0.4);
+  $('#dog-app').parallax("50%", 0.1);
   $('#third').parallax("50%", 0.3);
 </script>
   </head>
@@ -104,14 +104,36 @@ $(document).ready(function(){
           </div>
         </div>
       </div>
-      <div class="row">
-
-      </div>
+      <div class="large-12 large-centered text-center"> 
+            <div class="pack-button">
+             <a href="#dog-pack" data-target="dog-pack" class="button large team-buttom scroll">Check out the pack!</a>
+            </div>
+        </div>
     </div>
     </div>
     <div id="dog-pack">
+      <div class="large-12 large-centered text-center">
+        <div class="footer-button">
+             <a href="#dog-app" data-target="dog-app" class="button large team-buttom scroll">Finally Convinced?</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div id="dog-app">
+
     </div>
     <div id="dog-footer">
+      <div class="row">      
+        <div class="small-4 large-5 columns"><img src="images/twitter.png" styles="margin:-200px;"></img></div>
+        <div class="small-4 large-5 columns"><img src="images/facebook.png" styles="margin:-200px;"></img></div>
+        <div class="small-4 large-2 columns"><img src="images/youtube.png" styles="margin:-200px;"></img></div>
+      </div>
+      <div class="large-12 large-centered text-center">
+        <div class="return-button">
+             <a href="#guard-dog" data-target="guard-dog" class="button large team-buttom scroll">Return to Top</a>
+            </div>
+        </div>
+      </div>
     </div>
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
