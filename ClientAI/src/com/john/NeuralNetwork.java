@@ -1,5 +1,7 @@
 package com.john;
 
+import java.util.Random;
+
 /**
  * Neural Network (Multilayer Perceptron) as the Client AI
  */
@@ -14,11 +16,12 @@ public class NeuralNetwork {
     int hiddenLayerDimensions;
     int outputLayerDimensions;
     int numdata;
-
+    float [][] labeledData;
+    Random r = new Random();
     /*
     Initialization of the NeuralNetwork
      */
-    NeuralNetwork(int inputLayerDimensions, int hiddenLayerDimensions, int outputLayerDimensions, int numData){
+    NeuralNetwork(int inputLayerDimensions, int hiddenLayerDimensions, int outputLayerDimensions, int numData, float[][] labeledData){
         data = new float[numData][inputLayerDimensions];
         weight1 = new float[inputLayerDimensions][hiddenLayerDimensions];
         weight2 = new float[hiddenLayerDimensions][outputLayerDimensions];
@@ -26,6 +29,26 @@ public class NeuralNetwork {
         this.hiddenLayerDimensions = hiddenLayerDimensions;
         this.outputLayerDimensions = outputLayerDimensions;
         this.numdata = numData;
+        this.labeledData = labeledData;
+    }
+
+    void initializeWeights(){
+        /*
+        Initialize Weight1
+         */
+        for(int i = 0; i < inputLayerDimensions; i++){
+            for (int j = 0; j < hiddenLayerDimensions;j++){
+                weight1[i][j] = r.nextFloat();
+            }
+        }
+        /*
+        Initialize Weight2
+         */
+        for(int i = 0; i < hiddenLayerDimensions; i++){
+            for (int j = 0; j < outputLayerDimensions; j++){
+                weight2[i][j] = r.nextFloat();
+            }
+        }
     }
 
     /*
@@ -67,11 +90,13 @@ public class NeuralNetwork {
     Print Error (y - yHate) a.k.a (True Value - Predicted Value)
      */
     float[][] retrieveError(){
+        float[][] error = new float[numdata][outputLayerDimensions];
         for(int i = 0; i < numdata; i++){
             for(int j = 0; j < outputLayerDimensions; j++){
-                System.out.println(yHat[i][j]);
+                error[i][j] = labeledData[i][j] - yHat[i][j];
             }
         }
+        return error;
     }
     /*
     Given a float value applied with the logistic function, return that new value
