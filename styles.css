@@ -20,7 +20,7 @@ body {
 	color: white; 
 	height: 720px;
 	margin: 0 auto;
-	padding: 120px 0 0 0;
+	padding: 90px 0 0 0;
 }
 
 #dog-data {
@@ -36,7 +36,7 @@ body {
 	color: white;
 	height: 720px;
 	margin: 0 auto;
-	padding: 120px 0 0 0;
+	padding: 100px 0 0 0;
 
 }
 #dog-app {
@@ -50,9 +50,9 @@ body {
 #dog-footer {
 	background-color: #000000;
 	color: white;
-	height: 420px;
+	height: 280px;
 	margin: 0 auto;
-	padding: 120px 0 0 0;
+	padding: 80px 0 0 0;
 }
 @font-face {
 	font-family:'hip';
@@ -61,10 +61,14 @@ body {
 .mission-statement
 {
 	position: relative;
-	top: -100px;
+	top: -80px;
 }
 .team-buttom {
-	bottom: -110px;
+	bottom: -120px;
+}
+
+.data-buttom {
+	bottom: -200px;
 }
 .smartphones {
 	position: relative;
@@ -214,12 +218,21 @@ body {
 	color: #FCFFF5;
 }
 
-.squad {
+.TheSquad {
 	position: relative;
-	bottom: 150px;
+	bottom: 200px;
 }
 
 .footer-button {
 	position: relative;
 	bottom: 290px;
+}
+
+.company-name {
+	position: relative;
+	top: 30px;
+}
+
+.company-name h5 {
+	color: white;
 }
