@@ -7,7 +7,7 @@ from models import *
 
 @app.route("/")
 def hello():
-    return "Guard Dog API v0.1.0"
+    return "Guard Dog API v0.1.1"
 
 
 @app.route("/create")
@@ -19,10 +19,10 @@ def create():
 @app.route("/login", methods=["POST"])
 def login():
     obj = request.get_json()
-    phone_number = obj["phone_number"]
+    username = obj["username"]
     password = obj["password"]
 
-    user = User.query.filter_by(phone_number=phone_number).first()
+    user = User.query.filter_by(username=username).first()
     if user.verify_password(password):
         return "Great Success", 200
     else:
@@ -34,7 +34,7 @@ def data():
     def verify_structure(obj):
         if not obj:
             return False
-        elif ("real" not in obj) or ("frames" not in obj) or ("phone_number" not in obj):
+        elif ("real" not in obj) or ("frames" not in obj) or ("username" not in obj):
             return False
         return True
 
@@ -43,7 +43,7 @@ def data():
 
     real = bool(request.get_json()["real"])
 
-    user = User.query.filter_by(phone_number=request.get_json()["phone_number"]).first()
+    user = User.query.filter_by(username=request.get_json()["username"]).first()
 
     if not user:
         abort(401)
@@ -73,15 +73,15 @@ def debug_db():
 @app.route("/register", methods=["POST"])
 def register():
     obj = request.get_json()
-    name = obj["name"]
+    username = obj["username"]
     phone = obj["phone_number"]
     password = obj["password"]
     warranty = obj["warranty"]
 
-    if User.query.filter_by(phone_number=phone).first():
+    if User.query.filter_by(username=username).first():
         return "Error, phone number already registered", 401
 
-    user = User(name, phone, password, warranty)
+    user = User(username, phone, password, warranty)
 
     db.session.add(user)
     db.session.commit()
