@@ -174,20 +174,24 @@ body {
 .thomas-name h4 {
 	position: relative;
 	color: #FCFFF5;
+	font-weight: bold;
 }
 
 .thomas-bio h5 {
 	position: relative;
 	color: #FCFFF5;
+	font-style: italic;
 }
 
 .dan-name h4 {
 	position: relative;
 	color: #FCFFF5;
+	font-weight: bold;
 }
 .dan-bio h5 {
 	position: relative;
 	color: #FCFFF5;
+	font-style: italic;
 }
 
 .nathan {
@@ -197,11 +201,13 @@ body {
 .nathan-name h4 {
 	position: relative;
 	color: #FCFFF5;
+	font-weight: bold;
 }
 
 .nathan-bio h5 {
 	position: relative;
 	color: #FCFFF5;
+	font-style: italic;
 }
 
 .john {
@@ -211,11 +217,13 @@ body {
 .john-name h4 {
 	position: relative;
 	color: #FCFFF5;
+	font-weight: bold;
 }
 
 .john-bio h5 {
 	position: relative;
 	color: #FCFFF5;
+	font-style: italic;
 }
 
 .TheSquad {
