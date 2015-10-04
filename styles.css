@@ -16,3 +16,22 @@ body {
 .dog-button {
 	top: -25px;
 }
+
+#dog-info {
+	background-color: #FCFFF5;
+	color: white; 
+	height: 360px;
+	margin: 0 auto;
+	padding: 120px 0 0 0;
+}
+@font-face {
+	font-family:'hip';
+	src: url(fonts/_SIMPLIFICA-Typeface.ttf);
+}
+.mission-statement
+{
+	font-family:'hip';
+	color: #193441;
+	top: -10px;
+
+}
