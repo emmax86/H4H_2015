@@ -76,9 +76,9 @@ public class Settings extends Activity {
     public void myDogsPressed(View view) {
         new MaterialDialog.Builder(this)
                 .title("Add or remove Guard Dogs")
-                .content(getResources().getString(R.string.default_message_edit_material_dialog_message))
-                .positiveText(getResources().getString(R.string.change))
-                .negativeText(getResources().getString(R.string.cancel))
+                .content("Enter the phone number of the Guard Dog you would like to add or remove.")
+                .positiveText("Add")
+                .negativeText("Remove")
                 .input("", "this needs to be done", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
