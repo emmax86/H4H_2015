@@ -165,11 +165,13 @@ body {
 .steve-name h4 {
 	position: relative;
 	color: #FCFFF5;
+	font-weight: bold;
 }
 
 .steve-bio h5 {
 	position: relative;
 	color: #FCFFF5;
+	font-style: italic;
 }
 .thomas-name h4 {
 	position: relative;
