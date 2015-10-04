@@ -39,8 +39,14 @@
             android:name=".activities.SignUp"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name=".activities.Landing"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.Settings"
             android:screenOrientation="portrait">
         </activity>
 
