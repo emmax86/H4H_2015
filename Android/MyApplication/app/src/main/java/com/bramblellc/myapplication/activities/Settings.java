@@ -115,7 +115,7 @@ public class Settings extends Activity {
                         }
                         dogSet.add(input.toString());
                         editor.putStringSet("dogs", dogSet);
-                        editor.commit();
+                        editor.apply();
                     }
                 }).show();
     }
@@ -136,7 +136,7 @@ public class Settings extends Activity {
                         if (dogSet.contains(input)) {
                             dogSet.remove(input.toString());
                             editor.putStringSet("dogs", dogSet);
-                            editor.commit();
+                            editor.apply();
                         } else {
                             Toast.makeText(Settings.this, "There was no Guard Dog with the inputted phone number in your kennel.", Toast.LENGTH_LONG).show();
                         }
@@ -163,7 +163,7 @@ public class Settings extends Activity {
                         String contact = prefs.getString("phone", null);
                         SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
                         editor.putString("phone", null);
-                        editor.commit();
+                        editor.apply();
                         if (contact != null)
                             Toast.makeText(Settings.this, "Your phone service provider has been removed as your contact.", Toast.LENGTH_LONG).show();
                         else
@@ -186,7 +186,7 @@ public class Settings extends Activity {
                         SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
                         String contact = input.toString();
                         editor.putString("phone", contact);
-                        editor.commit();
+                        editor.apply();
                     }
                 }).show();
     }

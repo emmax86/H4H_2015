@@ -240,7 +240,7 @@ public class SignUp extends Activity {
                 SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
                 editor.putString("username", username);
                 editor.putString("password", password);
-                editor.commit();
+                editor.apply();
                 LocalBroadcastManager.getInstance(SignUp.this).unregisterReceiver(signUpReceiver);
                 SignUp.this.enableButtons();
                 Intent startIntent = new Intent(SignUp.this, Landing.class);

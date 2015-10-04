@@ -1,10 +1,14 @@
 package com.bramblellc.myapplication.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +16,8 @@ import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bramblellc.myapplication.R;
+import com.bramblellc.myapplication.sensor.GuardDogSensorListener;
+import com.bramblellc.myapplication.services.ActionConstants;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -21,18 +27,28 @@ public class Landing extends Activity {
 
     private ImageView transportType;
 
+    private GuardDogSensorListener guardDogSensorListener;
+
+    private BatchBroadcastReceiver batchBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
+
+        guardDogSensorListener = new GuardDogSensorListener(this, prefs.getString("username", "hodor"));
+
+        batchBroadcastReceiver = new BatchBroadcastReceiver();
+
         boolean finish = getIntent().getBooleanExtra("finish", false);
         if (finish) {
-            SharedPreferences prefs = getSharedPreferences("GuardDog", MODE_PRIVATE);
             String un = prefs.getString("username", null);
             SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
             editor.putString("old_username",un);
             editor.putString("username", null);
             editor.putString("password", null);
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(this, AccountPortal.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
             startActivity(intent);
@@ -72,6 +88,9 @@ public class Landing extends Activity {
                     })
                     .show();
         }
+        else {
+            startListening();
+        }
     }
 
     public void addDogsChain() {
@@ -91,7 +110,7 @@ public class Landing extends Activity {
                         }
                         dogSet.add(input.toString());
                         editor.putStringSet("dogs", dogSet);
-                        editor.commit();
+                        editor.apply();
                         addAnotherDog();
                     }
                 }).show();
@@ -148,6 +167,7 @@ public class Landing extends Activity {
                     }
                 })
                 .show();
+        startListening();
     }
 
     public void addPhoneService() {
@@ -162,7 +182,7 @@ public class Landing extends Activity {
                         SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
                         String contact = input.toString();
                         editor.putString("phone", contact);
-                        editor.commit();
+                        editor.apply();
                         congrats();
                     }
                 }).show();
@@ -174,4 +194,27 @@ public class Landing extends Activity {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
+
+    public void startListening() {
+        IntentFilter filter = new IntentFilter(ActionConstants.SENSOR_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(batchBroadcastReceiver, filter);
+    }
+
+    public void stopListening() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(batchBroadcastReceiver);
+    }
+
+    private class BatchBroadcastReceiver extends BroadcastReceiver {
+
+        private BatchBroadcastReceiver() {
+
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            
+        }
+
+    }
+
 }

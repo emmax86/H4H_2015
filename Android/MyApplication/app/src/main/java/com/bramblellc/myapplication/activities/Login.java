@@ -168,7 +168,7 @@ public class Login extends Activity {
                 SharedPreferences.Editor editor = getSharedPreferences("GuardDog", MODE_PRIVATE).edit();
                 editor.putString("username", username);
                 editor.putString("password", password);
-                editor.commit();
+                editor.apply();
                 LocalBroadcastManager.getInstance(Login.this).unregisterReceiver(loginReceiver);
                 Intent startIntent = new Intent(Login.this, Landing.class);
                 startActivity(startIntent);
