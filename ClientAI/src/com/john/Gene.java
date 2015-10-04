@@ -1,17 +1,19 @@
 package com.john;
 
+import java.util.Random;
 /**
  * Gene Class for the Genetic Algorithm used for Learning
  */
 public class Gene {
 
     float [][] gene;
+    Random r = new Random();
 
     Gene(int rows, int cols){
         gene = new float[rows][cols];
         for( int i = 0; i < rows; i++){
             for ( int j = 0; j < cols; j++) {
-                gene[i][j] = 0.0f;
+                gene[i][j] = r.nextFloat();
             }
         }
     }
@@ -28,5 +30,12 @@ public class Gene {
      */
     void copyWeightMatrix(float [][] weight){
         gene = weight;
+    }
+
+    /*
+    Return Gene
+     */
+    float[][] returnGene(){
+        return gene;
     }
 }
