@@ -1,0 +1,14 @@
+
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#guard-dog {
+	background: url(images/dog-background.jpg) 50% 0 no-repeat fixed;
+	color: white;
+	height: 1080px;
+	margin: 0 auto;
+	padding: 120px 0 0 0;
+}
