@@ -6,7 +6,8 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingBottom="15dp"
-    android:background="@color/color1">
+    android:background="@color/color1"
+    android:id="@+id/background">
 
     <ImageButton
         android:layout_alignParentRight="true"
@@ -15,5 +16,10 @@
         android:layout_height="50dp"
         android:background="@mipmap/settings"
         android:onClick="settingsPressed"/>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/landing_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
