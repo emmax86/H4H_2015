@@ -39,8 +39,19 @@
             android:name=".activities.SignUp"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name=".activities.Landing"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.Settings"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.TestEnvironment"
             android:screenOrientation="portrait">
         </activity>
 
@@ -48,6 +59,9 @@
             android:exported="false"/>
 
         <service android:name=".services.LoginService"
+            android:exported="false"/>
+
+        <service android:name=".services.TestingDataService"
             android:exported="false"/>
 
     </application>

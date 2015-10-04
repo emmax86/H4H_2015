@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color1">
+
+    <com.bramblellc.myapplication.layouts.CustomActionbar
+        android:id="@+id/settings_custom_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:text="Settings"
+        android:textColor="@color/color1"
+        app:backgroundType="1"
+        app:backButtonColor="blue"/>
+
+    <com.bramblellc.myapplication.layouts.FullWidthButton
+        android:id="@+id/my_dogs_full_width_button"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_below="@+id/settings_custom_actionbar"
+        android:text="My Guard Dogs"
+        app:lowerLine="true" />
+
+    <com.bramblellc.myapplication.layouts.FullWidthCheckbox
+        android:id="@+id/phone_aid_full_width_checkbox"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:text="Is your phone insured or on warrenty?"
+        android:layout_below="@+id/my_dogs_full_width_button"
+        app:lowerLine="true" />
+
+    <com.bramblellc.myapplication.layouts.FullWidthButton
+        android:id="@+id/phone_aid_input_full_width_button"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_below="@+id/phone_aid_full_width_checkbox"
+        android:text="Add number for phone damages"
+        app:lowerLine="true" />
+
+    <com.bramblellc.myapplication.layouts.FullWidthButton
+        android:id="@+id/test_full_width_button"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_below="@+id/phone_aid_input_full_width_button"
+        android:text="TEST ENVIRONMENT"
+        app:lowerLine="true" />
 
 </RelativeLayout>
