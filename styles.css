@@ -30,8 +30,6 @@ body {
 }
 .mission-statement
 {
-	font-family:'hip';
-	color: #193441;
-	top: -10px;
-
+	position: relative;
+	top: -100px;
 }
