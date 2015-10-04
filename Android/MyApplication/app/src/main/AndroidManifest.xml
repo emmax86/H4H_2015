@@ -47,6 +47,9 @@
         <service android:name=".services.SignUpService"
             android:exported="false"/>
 
+        <service android:name=".services.LoginService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

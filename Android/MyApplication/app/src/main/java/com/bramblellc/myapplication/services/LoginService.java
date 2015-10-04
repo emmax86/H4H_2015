@@ -1,5 +1,6 @@
 package com.bramblellc.myapplication.services;
 
+
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -17,32 +18,29 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class SignUpService extends IntentService {
-
+public class LoginService extends IntentService {
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-    public SignUpService(String name) {
+    public LoginService(String name) {
         super(name);
     }
 
-    public SignUpService() {
+    public LoginService() {
         this("SignUpService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            Route route = new Route("http://guarddog.stevex86.com/register");
+            Route route = new Route("http://guarddog.stevex86.com/login");
             Request request = new Request(route, new Post());
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", intent.getStringExtra("name"));
             jsonObject.put("phone_number", intent.getStringExtra("phone_number"));
-            jsonObject.put("warranty", false);
             jsonObject.put("password", intent.getStringExtra("password"));
 
             JsonBodyContent content = new JsonBodyContent(jsonObject.toString());
@@ -53,7 +51,7 @@ public class SignUpService extends IntentService {
 
             Response response = connectionHandler.getResponse();
 
-            Intent localIntent = new Intent(ActionConstants.REGISTER_ACTION);
+            Intent localIntent = new Intent(ActionConstants.LOGIN_ACTION);
             localIntent.putExtra("successful", true);
             localIntent.putExtra("message", response.getBodyContent().getOutputString());
             LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
@@ -66,6 +64,5 @@ public class SignUpService extends IntentService {
             Log.d("Guard-Dog", "Ayy lmao, IOException thrown");
         }
     }
-
 
 }
