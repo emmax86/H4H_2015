@@ -28,9 +28,9 @@ public class TestEnvironment extends Activity implements SensorEventListener {
     private long last_time;
 
     private long start_time;
+    private long end_time;
 
     private TextView time_tv;
-
     private Button start;
     private Button event;
     private Button no_event;
@@ -76,7 +76,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
         initialized = false;
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, 200000); // Sensor delay 200ms
 
         start = (Button)findViewById(R.id.start_b);
         event = (Button)findViewById(R.id.true_b);
@@ -89,6 +89,7 @@ public class TestEnvironment extends Activity implements SensorEventListener {
                 trial_in_progress = true;
                 time_tv.setText("0");
                 start_time = System.currentTimeMillis();
+                end_time = start_time + (1000*5); // 5 seconds of data
 
                 frame_data = new Frame[25];
                 index = 0;
